@@ -56,7 +56,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <h1 className="text-2xl font-black text-primary italic tracking-tighter">
               {siteConfig.name.toUpperCase()}
             </h1>
-            <p className="text-[10px] text-gray-500 font-bold tracking-widest mt-1">ADMIN CONSOLE</p>
+            <p className="text-[10px] text-gray-500 font-bold tracking-widest mt-1">ADMIN DASHBOARD</p>
           </div>
 
           <nav className="flex-1 space-y-2">

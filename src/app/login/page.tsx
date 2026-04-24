@@ -70,8 +70,8 @@ export default function LoginPage() {
               <ShieldCheck className="w-8 h-8 text-primary" />
             </div>
             <div>
-              <h1 className="text-2xl font-black italic tracking-tighter uppercase">Command <span className="text-primary">Center</span></h1>
-              <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Enterprise Administrative Access</p>
+              <h1 className="text-2xl font-black italic tracking-tighter uppercase">Admin <span className="text-primary">Dashboard</span></h1>
+              <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Portal Administrative Access</p>
             </div>
           </div>
 
