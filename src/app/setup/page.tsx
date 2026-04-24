@@ -120,10 +120,10 @@ export default function SetupWizard() {
                   <label className="text-[12px] font-semibold text-gray-500 ml-1">Select Design Architecture</label>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     {[
-                      { id: "SLIDER", name: "Slider Authority", image: "/setup/sakshi.png" },
-                      { id: "DYNAMIC", name: "Dynamic Grid", image: "/setup/10tv.png" },
-                      { id: "HYBRID", name: "Vision Hybrid", image: "/setup/tv9.png" },
-                      { id: "MINIMAL", name: "Minimalist Pro", image: "/setup/m9.png" }
+                      { id: "SLIDER", name: "Slider Authority", image: "/setup/slider.png" },
+                      { id: "DYNAMIC", name: "Dynamic Grid", image: "/setup/dynamic.png" },
+                      { id: "HYBRID", name: "Vision Hybrid", image: "/setup/hybrid.png" },
+                      { id: "MINIMAL", name: "Minimalist Pro", image: "/setup/minimal.png" }
                     ].map(tpl => (
                       <label key={tpl.id} className="relative cursor-pointer group">
                         <input type="radio" name="template" value={tpl.id} className="peer hidden" defaultChecked={tpl.id === "HYBRID"} />
