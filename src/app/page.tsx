@@ -13,7 +13,7 @@ import TemplateM9 from "@/components/templates/TemplateM9";
 
 export default async function Home() {
   const data = await getHomepageData();
-  const { heroArticles, latestArticles, siteSettings } = data;
+  const { heroArticles, latestArticles, breakingNews, trending, siteSettings } = data;
   const hero = heroArticles[0];
 
   // Dynamic Template Router
