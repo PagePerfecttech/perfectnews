@@ -170,6 +170,18 @@ model EPaperHotspot {
   height      Float
   articleUrl  String?
 }
+model SiteSettings {
+  id              String   @id @default(cuid())
+  portalName      String   @default("Prajapalana")
+  logoUrl         String?
+  tagline         String?
+  contactEmail    String?
+  contactPhone    String?
+  address         String?
+  isSetupComplete Boolean  @default(false)
+  updatedAt       DateTime @updatedAt
+  createdAt       DateTime @default(now())
+}
 
 model ElectionResult {
   id          String   @id @default(cuid())

@@ -4,14 +4,15 @@ import { prisma } from "./db";
 import { revalidatePath } from "next/cache";
 
 /**
- * PRODUCTION READY: Fetches all site settings as a key-value object
+ * PRODUCTION READY: Fetches portal branding and installation status
  */
 export async function getSiteSettings() {
-  const settings = await prisma.setting.findMany();
-  return settings.reduce((acc, curr) => {
-    acc[curr.key] = curr.value;
-    return acc;
-  }, {} as Record<string, string>);
+  const settings = await prisma.siteSettings.findFirst();
+  return settings || {
+    portalName: "Prajapalana",
+    tagline: "మీ స్వరం, మీ అండ",
+    isSetupComplete: false
+  };
 }
 
 /**

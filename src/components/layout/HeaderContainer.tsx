@@ -5,9 +5,9 @@ export async function HeaderContainer() {
   const settings = await getSiteSettings();
   
   const siteInfo = {
-    name: settings.siteName || "PRAJAPALANA",
-    tagline: settings.siteDescription || "మీ స్వరం, మీ అండ",
-    primaryColor: settings.primaryColor || "#E11D48"
+    name: settings.portalName || "PRAJAPALANA",
+    tagline: settings.tagline || "మీ స్వరం, మీ అండ",
+    primaryColor: "#E11D48" // Defaulting for now
   };
 
   return <Header siteInfo={siteInfo} />;
