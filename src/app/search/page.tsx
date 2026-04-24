@@ -1,6 +1,6 @@
 import React from 'react';
 import { Search as SearchIcon, Filter, Clock, Eye } from 'lucide-react';
-import { GridNewsCard } from '@/components/ui/NewsCards';
+import { NewsCard } from '@/components/ui/NewsCards';
 import Link from 'next/link';
 
 export default function SearchPage({ searchParams }: { searchParams: { q?: string } }) {
@@ -38,13 +38,13 @@ export default function SearchPage({ searchParams }: { searchParams: { q?: strin
           <div className="space-y-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12">
                {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
-                 <GridNewsCard 
+                 <NewsCard 
                    key={i}
-                   id={i.toString()}
                    title={`శోధన ఫలితం ${i}: తెలంగాణలో కొత్త పథకాలు – పూర్తి వివరాలు`}
                    category="News"
-                   time="2 Days Ago"
+                   date="2 Days Ago"
                    image={`https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=400&h=300&auto=format&fit=crop&sig=search-${i}`}
+                   href={`/news/${i}`}
                  />
                ))}
             </div>

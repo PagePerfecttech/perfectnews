@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma } from "@/lib/db";
 
 /**
  * Checks if the platform has completed the initial setup.

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Filter, Grid, List as ListIcon, TrendingUp } from 'lucide-react';
-import { GridNewsCard } from '@/components/ui/NewsCards';
+import { NewsCard } from '@/components/ui/NewsCards';
 import Link from 'next/link';
 
 export default function CategoryPage({ params }: { params: { slug: string } }) {
@@ -43,13 +43,13 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
         {/* News Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-12">
            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map(i => (
-             <GridNewsCard 
+             <NewsCard 
                key={i}
-               id={i.toString()}
                title="తెలంగాణ అభివృద్ధి పథంలో దూసుకుపోతోంది - మంత్రి కేటీఆర్ ఆశాభావం"
                category={categoryName}
-               time={`${i + 1} Hours Ago`}
+               date={`${i + 1} Hours Ago`}
                image={`https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=400&h=300&auto=format&fit=crop&sig=${i}`}
+               href={`/news/${i}`}
              />
            ))}
         </div>
