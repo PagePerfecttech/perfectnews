@@ -1,0 +1,197 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  REPORTER
+}
+
+enum ArticleStatus {
+  DRAFT
+  PENDING
+  PUBLISHED
+  ARCHIVED
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  role          Role      @default(REPORTER)
+  accounts      Account[]
+  sessions      Session[]
+  articles      Article[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique // Telugu name
+  slug        String    @unique
+  description String?
+  articles    Article[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Tag {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  slug      String    @unique
+  articles  Article[]
+}
+
+model Article {
+  id              String        @id @default(cuid())
+  title           String        // Telugu title
+  slug            String        @unique
+  type            String        @default("ARTICLE") // "ARTICLE", "VIDEO", "GALLERY"
+  content         String        @db.Text
+  excerpt         String?       @db.Text
+  featuredImage   String?
+  videoUrl        String?       // For Shorts/Reels
+  status          ArticleStatus @default(DRAFT)
+  viewCount       Int           @default(0)
+  isBreaking      Boolean       @default(false)
+  isTrending      Boolean       @default(false)
+  
+  // Relations
+  authorId        String
+  author          User          @relation(fields: [authorId], references: [id])
+  categoryId      String
+  category        Category      @relation(fields: [categoryId], references: [id])
+  tags            Tag[]
+  
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  
+  publishedAt     DateTime?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  deletedAt       DateTime?
+
+  @@index([status, publishedAt])
+  @@index([slug])
+  @@index([categoryId, status])
+  @@index([isBreaking, status])
+  @@index([isTrending, status])
+}
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+}
+
+model Advertisement {
+  id          String   @id @default(cuid())
+  name        String
+  type        String   // 'IMAGE', 'SCRIPT', 'GOOGLE_ADSENSE'
+  content     String   @db.Text // Image URL or Script code
+  link        String?
+  zone        String   // 'HEADER', 'SIDEBAR', 'IN_ARTICLE', 'FOOTER'
+  isActive    Boolean  @default(true)
+  startDate   DateTime?
+  endDate     DateTime?
+  createdAt   DateTime @default(now())
+
+  @@index([isActive, zone])
+}
+
+model EPaper {
+  id          String          @id @default(cuid())
+  title       String
+  date        DateTime
+  thumbnail   String
+  pdfUrl      String
+  pages       EPaperPage[]
+  createdAt   DateTime        @default(now())
+  deletedAt   DateTime?
+
+  @@index([date])
+}
+
+model EPaperPage {
+  id          String          @id @default(cuid())
+  pageNumber  Int
+  imageUrl    String
+  epaperId    String
+  epaper      EPaper          @relation(fields: [epaperId], references: [id])
+  hotspots    EPaperHotspot[]
+}
+
+model EPaperHotspot {
+  id          String     @id @default(cuid())
+  pageId      String
+  page        EPaperPage @relation(fields: [pageId], references: [id])
+  x           Float      // Percentage
+  y           Float
+  width       Float
+  height      Float
+  articleUrl  String?
+}
+
+model ElectionResult {
+  id          String   @id @default(cuid())
+  partyName   String
+  partyColor  String
+  leads       Int      @default(0)
+  won         Int      @default(0)
+  total       Int      // Total seats contested
+  updatedAt   DateTime @updatedAt
+  electionYear Int     @default(2024)
+
+  @@index([leads, won])
+}
+
+model ConstituencyResult {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  candidate   String
+  party       String
+  leadMargin  Int
+  status      String   // 'LEADING', 'WON', 'TRAILING'
+  updatedAt   DateTime @updatedAt
+
+  @@index([status])
+}

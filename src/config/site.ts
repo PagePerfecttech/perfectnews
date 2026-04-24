@@ -1,0 +1,30 @@
+export const siteConfig = {
+  name: "Telugu Post",
+  tagline: "మీ స్వరం, మీ అండ",
+  description: "ప్రజల స్వరం – నిజమైన వార్తలు",
+  logo: "/logo.png",
+  primaryColor: "#C62828",
+  contact: {
+    email: "contact@telugupost.com",
+    phone: "+91-9999999999",
+  },
+  socials: {
+    whatsapp: "https://whatsapp.com/channel/example",
+    facebook: "https://facebook.com/telugupost",
+    twitter: "https://twitter.com/telugupost",
+    instagram: "https://instagram.com/telugupost",
+    youtube: "https://youtube.com/telugupost",
+  },
+  categories: [
+    { id: "ap", label: "ఆంధ్రప్రదేశ్" },
+    { id: "ts", label: "తెలంగాణ" },
+    { id: "national", label: "జాతీయ వార్తలు" },
+    { id: "international", label: "అంతర్జాతీయ వార్తలు" },
+    { id: "politics", label: "రాజకీయాలు" },
+    { id: "sports", label: "క్రీడలు" },
+    { id: "entertainment", label: "వినోదం" },
+    { id: "health", label: "ఆరోగ్యం" },
+    { id: "business", label: "వ్యాపారం" },
+    { id: "opinion", label: "అభిప్రాయం" },
+  ],
+};
