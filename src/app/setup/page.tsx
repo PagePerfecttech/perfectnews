@@ -7,13 +7,13 @@ import {
   Layout, 
   UserPlus, 
   ChevronRight, 
-  ChevronLeft,
   CheckCircle2,
   Globe,
   Mail,
   Phone,
-  MapPin,
-  Lock
+  Lock,
+  Sparkles,
+  Zap
 } from 'lucide-react';
 import { initializeBranding, createRootAdmin, finalizeSetup } from '@/lib/setup-actions';
 import { useRouter } from 'next/navigation';
@@ -51,216 +51,225 @@ export default function SetupWizard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F9FA] flex items-center justify-center p-4">
-      <div className="max-w-2xl w-full bg-white rounded-[2.5rem] shadow-2xl border border-gray-100 overflow-hidden animate-in fade-in zoom-in duration-500">
+    <div className="min-h-screen bg-[#0A0A0B] flex items-center justify-center p-6 relative overflow-hidden">
+      
+      {/* Dynamic Background Accents */}
+      <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] animate-pulse" />
+      <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[100px]" />
+
+      <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 bg-white/[0.02] backdrop-blur-3xl rounded-[3rem] border border-white/10 shadow-[0_0_100px_rgba(0,0,0,0.5)] overflow-hidden relative z-10">
         
-        {/* Progress Header */}
-        <div className="bg-secondary p-8 text-white relative">
-          <div className="flex items-center space-x-4 mb-8">
-            <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center shadow-lg">
-              <Rocket className="w-6 h-6 text-white" />
+        {/* Left Side: Onboarding Info */}
+        <div className="lg:col-span-4 bg-white/5 p-12 border-r border-white/5 hidden lg:flex flex-col justify-between">
+          <div className="space-y-8">
+            <div className="w-16 h-16 bg-primary rounded-[2rem] flex items-center justify-center shadow-2xl shadow-primary/20 rotate-3">
+              <Rocket className="w-8 h-8 text-white" />
             </div>
-            <div>
-              <h1 className="text-2xl font-black italic tracking-tighter uppercase">Perfect News <span className="text-primary">Setup</span></h1>
-              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Enterprise News SaaS Engine v1.0</p>
+            <div className="space-y-4">
+              <h1 className="text-3xl font-black italic tracking-tighter uppercase text-white">Perfect <span className="text-primary">News</span></h1>
+              <p className="text-xs text-gray-400 font-bold uppercase tracking-[0.2em] leading-relaxed">
+                Empowering your voice with high-fidelity digital journalism.
+              </p>
             </div>
           </div>
 
-          <div className="flex justify-between relative z-10">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="flex flex-col items-center space-y-2">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black transition-all ${step >= i ? 'bg-primary text-white scale-110' : 'bg-gray-700 text-gray-400'}`}>
-                  {step > i ? <CheckCircle2 className="w-5 h-5" /> : i}
+          <div className="space-y-6">
+            {[
+              { id: 1, label: "Brand Identity", desc: "Core portal naming & design tokens" },
+              { id: 2, label: "Core Audit", desc: "Cloud infrastructure validation" },
+              { id: 3, label: "Superuser", desc: "Administrative access creation" },
+              { id: 4, label: "Activation", desc: "Engine deployment & launch" }
+            ].map((s) => (
+              <div key={s.id} className={`flex items-center space-x-4 transition-all duration-500 ${step === s.id ? 'opacity-100 scale-105 translate-x-2' : 'opacity-30'}`}>
+                <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black ${step === s.id ? 'bg-primary text-white' : 'bg-white/10 text-white'}`}>
+                  {step > s.id ? <CheckCircle2 className="w-5 h-5" /> : s.id}
                 </div>
-                <span className={`text-[8px] font-black uppercase tracking-tighter ${step >= i ? 'text-white' : 'text-gray-500'}`}>
-                  {i === 1 && "Identity"}
-                  {i === 2 && "Verification"}
-                  {i === 3 && "Superuser"}
-                  {i === 4 && "Launch"}
-                </span>
+                <div>
+                  <h3 className="text-[10px] font-black uppercase text-white tracking-widest">{s.label}</h3>
+                  <p className="text-[8px] text-gray-500 font-bold uppercase tracking-tight">{s.desc}</p>
+                </div>
               </div>
             ))}
-            <div className="absolute top-4 left-0 w-full h-[2px] bg-gray-700 -z-10" />
-            <div className="absolute top-4 left-0 h-[2px] bg-primary transition-all duration-500 -z-10" style={{ width: `${(step - 1) * 33}%` }} />
+          </div>
+
+          <div className="pt-8">
+            <p className="text-[9px] font-black uppercase text-gray-500 tracking-[0.3em]">v1.0.8 Enterprise Engine</p>
           </div>
         </div>
 
-        {/* Content Area */}
-        <div className="p-10 min-h-[400px] flex flex-col">
+        {/* Right Side: Interactive Forms */}
+        <div className="lg:col-span-8 p-12 lg:p-16 flex flex-col justify-center">
           
           {step === 1 && (
-            <form onSubmit={onBrandingSubmit} className="space-y-6 animate-in slide-in-from-right-4 duration-300">
-              <div className="space-y-2">
-                <h2 className="text-xl font-black uppercase flex items-center space-x-2">
-                  <Layout className="w-5 h-5 text-primary" />
-                  <span>Portal Branding</span>
+            <form onSubmit={onBrandingSubmit} className="space-y-10 animate-in fade-in slide-in-from-right-8 duration-500">
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3 text-primary">
+                  <Sparkles className="w-6 h-6" />
+                  <span className="text-xs font-black uppercase tracking-[0.3em]">Step 01 / Identity</span>
+                </div>
+                <h2 className="text-4xl font-black text-white italic tracking-tighter uppercase leading-tight">
+                  Design Your <span className="text-primary">Portal</span>
                 </h2>
-                <p className="text-sm text-gray-500 font-medium">Define your portal's public identity.</p>
+                <p className="text-sm text-gray-400 font-medium">Initialize your news empire's core branding.</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-gray-400">News Portal Name</label>
-                  <div className="relative">
-                    <Globe className="absolute left-4 top-3.5 w-4 h-4 text-gray-400" />
-                    <input name="portalName" required className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3 pl-12 text-sm focus:ring-2 focus:ring-primary outline-none" placeholder="e.g. Telugu Post" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">Portal Name</label>
+                  <div className="relative group">
+                    <Globe className="absolute left-5 top-5 w-5 h-5 text-gray-500 group-focus-within:text-primary transition-colors" />
+                    <input name="portalName" required className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-5 pl-14 text-white text-sm focus:ring-2 focus:ring-primary outline-none transition-all placeholder:text-gray-600" placeholder="e.g. Perfect News" />
                   </div>
                 </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-gray-400">Tagline / Motto</label>
-                  <input name="tagline" className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3 text-sm focus:ring-2 focus:ring-primary outline-none" placeholder="e.g. మీ స్వరం, మీ అండ" />
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">Tagline</label>
+                  <input name="tagline" className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-5 text-white text-sm focus:ring-2 focus:ring-primary outline-none transition-all placeholder:text-gray-600" placeholder="e.g. Real News, Real Voice" />
                 </div>
               </div>
 
-              {/* Template Selection */}
-              <div className="space-y-4 pt-4 border-t border-gray-50">
-                 <label className="text-[10px] font-black uppercase text-gray-400">Select Frontend Design (Clone)</label>
-                 <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-4">
+                 <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1 flex items-center space-x-2">
+                   <Layout className="w-3 h-3" />
+                   <span>Select Design Architecture</span>
+                 </label>
+                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {[
-                      { id: "SLIDER", name: "Slider Authority", image: "/setup/sakshi.png" },
+                      { id: "SLIDER", name: "Slider Auth", image: "/setup/sakshi.png" },
                       { id: "DYNAMIC", name: "Dynamic Grid", image: "/setup/10tv.png" },
                       { id: "HYBRID", name: "Vision Hybrid", image: "/setup/tv9.png" },
                       { id: "MINIMAL", name: "Minimalist Pro", image: "/setup/m9.png" }
                     ].map(tpl => (
                       <label key={tpl.id} className="relative group cursor-pointer">
                         <input type="radio" name="template" value={tpl.id} className="peer hidden" defaultChecked={tpl.id === "HYBRID"} />
-                        <div className="border-2 border-gray-100 rounded-2xl overflow-hidden p-1 peer-checked:border-primary transition-all grayscale-[50%] peer-checked:grayscale-0 hover:grayscale-0">
+                        <div className="border-2 border-white/5 bg-white/5 rounded-2xl overflow-hidden p-1 peer-checked:border-primary peer-checked:bg-primary/5 transition-all grayscale group-hover:grayscale-0 peer-checked:grayscale-0">
                            <img src={tpl.image} className="aspect-video object-cover rounded-xl" alt={tpl.name} />
-                           <p className="text-[9px] font-black text-center py-2 uppercase tracking-tighter">{tpl.name}</p>
-                        </div>
-                        <div className="absolute top-2 right-2 opacity-0 peer-checked:opacity-100 transition-opacity">
-                           <CheckCircle2 className="w-5 h-5 text-primary fill-white" />
+                           <p className="text-[8px] font-black text-center py-2 text-gray-500 peer-checked:text-white uppercase tracking-tighter">{tpl.name}</p>
                         </div>
                       </label>
                     ))}
                  </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-gray-400">Contact Email</label>
-                  <div className="relative">
-                    <Mail className="absolute left-4 top-3.5 w-4 h-4 text-gray-400" />
-                    <input name="contactEmail" type="email" required className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3 pl-12 text-sm focus:ring-2 focus:ring-primary outline-none" placeholder="news@portal.com" />
-                  </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">Support Email</label>
+                  <input name="contactEmail" type="email" required className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-5 text-white text-sm focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="news@perfect.com" />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-gray-400">Contact Phone</label>
-                  <div className="relative">
-                    <Phone className="absolute left-4 top-3.5 w-4 h-4 text-gray-400" />
-                    <input name="contactPhone" className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3 pl-12 text-sm focus:ring-2 focus:ring-primary outline-none" placeholder="+91 00000 00000" />
-                  </div>
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">Hotline Number</label>
+                  <input name="contactPhone" className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-5 text-white text-sm focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="+91 00000 00000" />
                 </div>
               </div>
 
-              <button disabled={loading} type="submit" className="w-full bg-secondary text-white p-4 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center space-x-2 hover:bg-black transition-all">
-                {loading ? "Saving Config..." : "Continue to Verification"}
-                <ChevronRight className="w-4 h-4" />
+              <button disabled={loading} type="submit" className="w-full bg-primary text-white p-6 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs flex items-center justify-center space-x-3 hover:scale-105 hover:shadow-[0_0_40px_rgba(227,6,19,0.3)] active:scale-95 transition-all">
+                {loading ? "Initializing..." : "Proceed to Cloud Audit"}
+                <ChevronRight className="w-5 h-5" />
               </button>
             </form>
           )}
 
           {step === 2 && (
-            <div className="space-y-8 animate-in slide-in-from-right-4 duration-300">
-              <div className="space-y-2">
-                <h2 className="text-xl font-black uppercase flex items-center space-x-2">
-                  <ShieldCheck className="w-5 h-5 text-primary" />
-                  <span>Infrastructure Audit</span>
+            <div className="space-y-12 animate-in fade-in slide-in-from-right-8 duration-500">
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3 text-primary">
+                  <Zap className="w-6 h-6 animate-pulse" />
+                  <span className="text-xs font-black uppercase tracking-[0.3em]">Step 02 / Core Audit</span>
+                </div>
+                <h2 className="text-4xl font-black text-white italic tracking-tighter uppercase leading-tight">
+                  Verifying <span className="text-primary">Engine</span>
                 </h2>
-                <p className="text-sm text-gray-500 font-medium">Verifying your cloud integrations.</p>
+                <p className="text-sm text-gray-400 font-medium">Validating cloud infrastructure & security protocols.</p>
               </div>
 
               <div className="space-y-4">
                 {[
-                  { name: "Database (PostgreSQL)", status: "connected", label: "Prisma Layer Active" },
-                  { name: "Media CDN (Cloudflare R2)", status: "pending", label: "Checking S3 Keys..." },
-                  { name: "Push Hub (OneSignal)", status: "pending", label: "Verifying App ID..." }
+                  { name: "PostgreSQL Database", status: "connected", label: "ORM Layer Active" },
+                  { name: "Content Delivery Network", status: "pending", label: "Resolving S3 Cluster..." },
+                  { name: "Push Notification Hub", status: "pending", label: "Syncing App Identity..." }
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                    <div className="flex items-center space-x-4">
-                      <div className={`w-2 h-2 rounded-full ${item.status === 'connected' ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]' : 'bg-amber-500 animate-pulse'}`} />
+                  <div key={i} className="flex items-center justify-between p-6 bg-white/[0.03] rounded-[1.5rem] border border-white/5 hover:border-white/10 transition-colors">
+                    <div className="flex items-center space-x-5">
+                      <div className={`w-3 h-3 rounded-full ${item.status === 'connected' ? 'bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.6)]' : 'bg-amber-500 animate-pulse'}`} />
                       <div>
-                        <p className="text-xs font-black uppercase text-secondary">{item.name}</p>
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-tighter">{item.label}</p>
+                        <p className="text-[10px] font-black uppercase text-white tracking-widest leading-none mb-1">{item.name}</p>
+                        <p className="text-[8px] font-black text-gray-500 uppercase tracking-tighter">{item.label}</p>
                       </div>
                     </div>
-                    {item.status === 'connected' && <CheckCircle2 className="w-5 h-5 text-green-500" />}
+                    {item.status === 'connected' && <CheckCircle2 className="w-6 h-6 text-green-500" />}
                   </div>
                 ))}
               </div>
 
-              <div className="flex space-x-4">
-                <button onClick={handleBack} className="flex-1 bg-gray-100 text-gray-500 p-4 rounded-2xl font-black uppercase tracking-widest text-xs">Back</button>
-                <button onClick={handleNext} className="flex-[2] bg-primary text-white p-4 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center space-x-2 shadow-lg shadow-primary/20">
-                  Confirm & Continue
-                  <ChevronRight className="w-4 h-4" />
+              <div className="flex space-x-4 pt-4">
+                <button onClick={handleBack} className="flex-1 bg-white/5 text-gray-400 p-6 rounded-[2rem] font-black uppercase tracking-widest text-xs border border-white/5">Back</button>
+                <button onClick={handleNext} className="flex-[2] bg-white text-black p-6 rounded-[2rem] font-black uppercase tracking-widest text-xs flex items-center justify-center space-x-3 hover:bg-primary hover:text-white transition-all">
+                  Confirm Integration
+                  <ChevronRight className="w-5 h-5" />
                 </button>
               </div>
             </div>
           )}
 
           {step === 3 && (
-            <form onSubmit={onAdminSubmit} className="space-y-6 animate-in slide-in-from-right-4 duration-300">
-              <div className="space-y-2">
-                <h2 className="text-xl font-black uppercase flex items-center space-x-2">
-                  <UserPlus className="w-5 h-5 text-primary" />
-                  <span>Root Admin Creation</span>
+            <form onSubmit={onAdminSubmit} className="space-y-12 animate-in fade-in slide-in-from-right-8 duration-500">
+               <div className="space-y-4">
+                <div className="flex items-center space-x-3 text-primary">
+                  <UserPlus className="w-6 h-6" />
+                  <span className="text-xs font-black uppercase tracking-[0.3em]">Step 03 / Superuser</span>
+                </div>
+                <h2 className="text-4xl font-black text-white italic tracking-tighter uppercase leading-tight">
+                  Administrative <span className="text-primary">Master</span>
                 </h2>
-                <p className="text-sm text-gray-500 font-medium">Create your master administrative account.</p>
+                <p className="text-sm text-gray-400 font-medium">Create your high-level security credentials.</p>
               </div>
 
-              <div className="space-y-4">
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-gray-400">Full Name</label>
-                  <input name="name" required className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3 text-sm focus:ring-2 focus:ring-primary outline-none" placeholder="Master Admin" />
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">Full Name</label>
+                  <input name="name" required className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-5 text-white text-sm focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="Chief Administrator" />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-gray-400">Login Email</label>
-                  <input name="email" type="email" required className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3 text-sm focus:ring-2 focus:ring-primary outline-none" placeholder="admin@portal.com" />
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">Primary Email</label>
+                  <input name="email" type="email" required className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-5 text-white text-sm focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="admin@perfectnews.com" />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-[10px] font-black uppercase text-gray-400">Secure Password</label>
-                  <div className="relative">
-                    <Lock className="absolute left-4 top-3.5 w-4 h-4 text-gray-400" />
-                    <input name="password" type="password" required className="w-full bg-gray-50 border border-gray-100 rounded-xl p-3 pl-12 text-sm focus:ring-2 focus:ring-primary outline-none" placeholder="••••••••" />
+                <div className="space-y-2">
+                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1 text-primary">Master Key (Password)</label>
+                  <div className="relative group">
+                    <Lock className="absolute left-5 top-5 w-5 h-5 text-gray-500 group-focus-within:text-primary transition-colors" />
+                    <input name="password" type="password" required className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-5 pl-14 text-white text-sm focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="••••••••" />
                   </div>
                 </div>
               </div>
 
-              <button disabled={loading} type="submit" className="w-full bg-secondary text-white p-4 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center space-x-2 hover:bg-black transition-all">
-                {loading ? "Creating..." : "Initialize Admin Access"}
-                <ChevronRight className="w-4 h-4" />
+              <button disabled={loading} type="submit" className="w-full bg-primary text-white p-6 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs flex items-center justify-center space-x-3 hover:scale-105 active:scale-95 transition-all">
+                {loading ? "Generating Credentials..." : "Initialize Admin Access"}
+                <ChevronRight className="w-5 h-5" />
               </button>
             </form>
           )}
 
           {step === 4 && (
-            <div className="text-center space-y-8 animate-in zoom-in duration-500">
-              <div className="w-24 h-24 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto shadow-inner">
-                <CheckCircle2 className="w-12 h-12" />
+            <div className="text-center space-y-12 animate-in zoom-in duration-700">
+              <div className="relative inline-block">
+                <div className="w-32 h-32 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto shadow-[0_0_50px_rgba(34,197,94,0.2)]">
+                  <CheckCircle2 className="w-16 h-16" />
+                </div>
+                <div className="absolute inset-0 w-32 h-32 border-4 border-green-500 border-dashed rounded-full animate-spin-slow opacity-20" />
               </div>
-              <div className="space-y-2">
-                <h2 className="text-3xl font-black uppercase tracking-tighter">Ready for <span className="text-primary">Launch</span></h2>
-                <p className="telugu-text text-xl font-bold text-gray-500">మీ న్యూస్ పోర్టల్ సిద్ధంగా ఉంది!</p>
-                <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">Setup is complete. The wizard will now be disabled.</p>
+              
+              <div className="space-y-4">
+                <h2 className="text-5xl font-black text-white italic tracking-tighter uppercase">Ready for <span className="text-primary">Launch</span></h2>
+                <p className="text-lg text-gray-400 font-medium">Your enterprise news engine is fully operational.</p>
               </div>
 
-              <button onClick={onFinalize} disabled={loading} className="w-full bg-primary text-white p-6 rounded-3xl font-black uppercase tracking-widest text-sm flex items-center justify-center space-x-3 shadow-2xl shadow-primary/30 hover:scale-105 transition-all">
-                {loading ? "Finalizing..." : "Go to Homepage"}
-                <Rocket className="w-5 h-5" />
+              <button onClick={onFinalize} disabled={loading} className="w-full bg-white text-black p-8 rounded-[2.5rem] font-black uppercase tracking-[0.3em] text-sm flex items-center justify-center space-x-4 shadow-[0_0_60px_rgba(255,255,255,0.1)] hover:bg-primary hover:text-white hover:scale-105 transition-all">
+                {loading ? "Igniting Engine..." : "Go to Homepage"}
+                <Rocket className="w-6 h-6" />
               </button>
             </div>
           )}
 
         </div>
-
-        {/* Footer Info */}
-        <div className="bg-gray-50 p-4 text-center">
-          <p className="text-[8px] font-black uppercase text-gray-400 tracking-[0.3em]">
-            Secured by PagePerfect Tech • Enterprise News Platform
-          </p>
-        </div>
-
       </div>
     </div>
   );

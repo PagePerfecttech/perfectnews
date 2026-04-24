@@ -1,9 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Noto_Sans_Telugu } from "next/font/google";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { BreakingNews } from "@/components/layout/BreakingNews";
-import { LiveTVPlayer } from "@/components/layout/LiveTVPlayer";
 import "./globals.css";
 
 const inter = Inter({
@@ -18,12 +14,12 @@ const notoTelugu = Noto_Sans_Telugu({
 });
 
 export const metadata: Metadata = {
-  title: "Telugu Post | మీ స్వరం, మీ అండ",
-  description: "Andhra Pradesh & Telangana's Leading News Portal",
+  title: "Perfect News | Setup Wizard",
+  description: "Enterprise News SaaS Engine Initialization",
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
   },
-  keywords: "Telugu News, Latest News, Breaking News, Andhra Pradesh News, Telangana News",
+  keywords: "News Portal, SaaS, Perfect News, Administration",
 };
 
 import { getSiteSettings } from "@/lib/settings";
@@ -67,16 +63,7 @@ export default async function RootLayout({
           />
         )}
 
-        <div className="flex flex-col min-h-screen">
-          <Header />
-          <BreakingNews />
-          <main className="flex-grow">
-            {children}
-          </main>
-          <Footer />
-        </div>
-
-        <LiveTVPlayer />
+        {children}
       </body>
     </html>
   );
