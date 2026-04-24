@@ -6,14 +6,15 @@ import { siteConfig } from '@/config/site';
 import { Menu, Search, X, MapPin, ChevronDown } from 'lucide-react';
 
 interface HeaderProps {
-  siteInfo: {
+  siteInfo?: {
     name: string;
     tagline: string;
     primaryColor: string;
   };
 }
 
-export function Header({ siteInfo }: HeaderProps) {
+export function Header({ siteInfo }: HeaderProps = { siteInfo: { name: "PRAJAPALANA", tagline: "మీ స్వరం, మీ అండ", primaryColor: "#E11D48" } }) {
+  const finalSiteInfo = siteInfo || { name: "PRAJAPALANA", tagline: "మీ స్వరం, మీ అండ", primaryColor: "#E11D48" };
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -35,10 +36,10 @@ export function Header({ siteInfo }: HeaderProps) {
           <div className="flex items-center space-x-6">
             <Link href="/" className="flex flex-col">
               <h1 className="text-3xl md:text-4xl font-black text-primary tracking-tighter">
-                {siteInfo.name.toUpperCase()}
+                {finalSiteInfo.name.toUpperCase()}
               </h1>
               <span className="text-[10px] md:text-xs telugu-text font-medium text-secondary/60 -mt-1 tracking-widest">
-                {siteInfo.tagline}
+                {finalSiteInfo.tagline}
               </span>
             </Link>
 

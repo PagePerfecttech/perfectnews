@@ -12,7 +12,8 @@ import {
   Eye, 
   Music,
   Clock,
-  ArrowRight
+  ArrowRight,
+  Plus
 } from 'lucide-react';
 
 export default function ShortsEditor() {
