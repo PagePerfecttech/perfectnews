@@ -11,7 +11,10 @@ export async function getSiteSettings() {
   return settings || {
     portalName: "Prajapalana",
     tagline: "మీ స్వరం, మీ అండ",
-    isSetupComplete: false
+    isSetupComplete: false,
+    primaryColor: "#E30613",
+    template: "ORIGINAL",
+    theme: "LIGHT"
   };
 }
 

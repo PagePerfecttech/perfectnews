@@ -17,10 +17,11 @@ export default async function Home() {
   const hero = heroArticles[0];
 
   // Dynamic Template Router
-  if (siteSettings?.template === "TV9") return <TemplateTV9 data={data} />;
-  if (siteSettings?.template === "SAKSHI") return <TemplateSakshi data={data} />;
-  if (siteSettings?.template === "10TV") return <Template10TV data={data} />;
-  if (siteSettings?.template === "M9") return <TemplateM9 data={data} />;
+  const currentTemplate = (siteSettings as any)?.template;
+  if (currentTemplate === "TV9") return <TemplateTV9 data={data} />;
+  if (currentTemplate === "SAKSHI") return <TemplateSakshi data={data} />;
+  if (currentTemplate === "10TV") return <Template10TV data={data} />;
+  if (currentTemplate === "M9") return <TemplateM9 data={data} />;
 
   return (
     <main className="min-h-screen bg-[#F8F9FA]">

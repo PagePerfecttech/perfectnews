@@ -34,7 +34,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const settings = await getSiteSettings();
-  const primaryColor = settings?.primaryColor || "#E30613";
+  const primaryColor = (settings as any)?.primaryColor || "#E30613";
 
   return (
     <html lang="te">

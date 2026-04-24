@@ -27,7 +27,7 @@ export default function SiteSettingsPage() {
           ...prev,
           siteName: settings.portalName || prev.siteName,
           siteDescription: settings.tagline || prev.siteDescription,
-          primaryColor: settings.primaryColor || prev.primaryColor,
+          primaryColor: (settings as any).primaryColor || prev.primaryColor,
           template: (settings as any).template || prev.template,
           contactEmail: settings.contactEmail || prev.contactEmail,
         }));
