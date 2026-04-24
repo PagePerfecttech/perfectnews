@@ -6,7 +6,7 @@ import { HeroCard, NewsCard } from "@/components/ui/NewsCards";
 import { TrendingUp, Clock, Flame, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
-export default function TemplateSakshi({ data }: { data: any }) {
+export default function TemplateSlider({ data }: { data: any }) {
   const { heroArticles, latestArticles, trending, siteSettings } = data;
   const [activeHero, setActiveHero] = useState(0);
   const [sidebarTab, setSidebarTab] = useState('latest');

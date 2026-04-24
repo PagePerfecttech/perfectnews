@@ -61,7 +61,7 @@ export default function SetupWizard() {
               <Rocket className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-black italic tracking-tighter uppercase">Prajapalana <span className="text-primary">Setup</span></h1>
+              <h1 className="text-2xl font-black italic tracking-tighter uppercase">Perfect News <span className="text-primary">Setup</span></h1>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Enterprise News SaaS Engine v1.0</p>
             </div>
           </div>
@@ -117,13 +117,13 @@ export default function SetupWizard() {
                  <label className="text-[10px] font-black uppercase text-gray-400">Select Frontend Design (Clone)</label>
                  <div className="grid grid-cols-2 gap-4">
                     {[
-                      { id: "SAKSHI", name: "Sakshi Digital", image: "/setup/sakshi.png" },
-                      { id: "10TV", name: "10TV Velocity", image: "/setup/10tv.png" },
-                      { id: "TV9", name: "TV9 Hybrid", image: "/setup/tv9.png" },
-                      { id: "M9", name: "M9 Minimalist", image: "/setup/m9.png" }
+                      { id: "SLIDER", name: "Slider Authority", image: "/setup/sakshi.png" },
+                      { id: "DYNAMIC", name: "Dynamic Grid", image: "/setup/10tv.png" },
+                      { id: "HYBRID", name: "Vision Hybrid", image: "/setup/tv9.png" },
+                      { id: "MINIMAL", name: "Minimalist Pro", image: "/setup/m9.png" }
                     ].map(tpl => (
                       <label key={tpl.id} className="relative group cursor-pointer">
-                        <input type="radio" name="template" value={tpl.id} className="peer hidden" defaultChecked={tpl.id === "TV9"} />
+                        <input type="radio" name="template" value={tpl.id} className="peer hidden" defaultChecked={tpl.id === "HYBRID"} />
                         <div className="border-2 border-gray-100 rounded-2xl overflow-hidden p-1 peer-checked:border-primary transition-all grayscale-[50%] peer-checked:grayscale-0 hover:grayscale-0">
                            <img src={tpl.image} className="aspect-video object-cover rounded-xl" alt={tpl.name} />
                            <p className="text-[9px] font-black text-center py-2 uppercase tracking-tighter">{tpl.name}</p>

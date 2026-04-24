@@ -1,17 +1,17 @@
 export const siteConfig = {
-  name: "Telugu Post",
+  name: "Perfect News",
   tagline: "మీ స్వరం, మీ అండ",
   description: "ప్రజల స్వరం – నిజమైన వార్తలు",
   logo: "/logo.png",
-  primaryColor: "#C62828",
+  primaryColor: "#E30613",
   contact: {
-    email: "contact@telugupost.com",
+    email: "contact@perfectnews.com",
     phone: "+91-9999999999",
   },
   socials: {
     whatsapp: "https://whatsapp.com/channel/example",
-    facebook: "https://facebook.com/telugupost",
-    twitter: "https://twitter.com/telugupost",
+    facebook: "https://facebook.com/perfectnews",
+    twitter: "https://twitter.com/perfectnews",
     instagram: "https://instagram.com/telugupost",
     youtube: "https://youtube.com/telugupost",
   },

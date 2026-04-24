@@ -6,7 +6,7 @@ import { NewsCard, ShortsCard } from "@/components/ui/NewsCards";
 import { Hash, PlayCircle, TrendingUp, Zap } from "lucide-react";
 import Link from "next/link";
 
-export default function Template10TV({ data }: { data: any }) {
+export default function TemplateDynamic({ data }: { data: any }) {
   const { heroArticles, latestArticles, trending, siteSettings } = data;
   
   // Trending Topics for Hashtag Navigation (Mocked from Category names)

@@ -6,7 +6,7 @@ import { NewsCard } from "@/components/ui/NewsCards";
 import { DollarSign, Star, TrendingUp, Info } from "lucide-react";
 import Link from "next/link";
 
-export default function TemplateM9({ data }: { data: any }) {
+export default function TemplateMinimal({ data }: { data: any }) {
   const { heroArticles, latestArticles, trending, siteSettings } = data;
   
   // Mock Box Office Data for M9 Signature Widget

@@ -127,10 +127,10 @@ export default function SiteSettingsPage() {
 
            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { id: "SAKSHI", name: "Sakshi Digital", image: "/setup/sakshi.png", desc: "Slider-First Authoritative Layout" },
-                { id: "10TV", name: "10TV Velocity", image: "/setup/10tv.png", desc: "High-Energy Grid with Hashtags" },
-                { id: "TV9", name: "TV9 Hybrid", image: "/setup/tv9.png", desc: "Media-Rich Hybrid Grid" },
-                { id: "M9", name: "M9 Minimalist", image: "/setup/m9.png", desc: "Premium Minimal with Box Office Ticker" }
+                { id: "SLIDER", name: "Slider Authority", image: "/setup/sakshi.png", desc: "Slider-First Authoritative Layout" },
+                { id: "DYNAMIC", name: "Dynamic Grid", image: "/setup/10tv.png", desc: "High-Energy Grid with Hashtags" },
+                { id: "HYBRID", name: "Vision Hybrid", image: "/setup/tv9.png", desc: "Media-Rich Hybrid Grid" },
+                { id: "MINIMAL", name: "Minimalist Pro", image: "/setup/m9.png", desc: "Premium Minimal with Box Office Ticker" }
               ].map(tpl => (
                 <label key={tpl.id} className="relative group cursor-pointer">
                   <input 

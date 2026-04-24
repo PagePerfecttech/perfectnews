@@ -8,7 +8,7 @@ import { Newsletter } from "@/components/ui/Newsletter";
 import { ChevronRight, PlayCircle, TrendingUp } from "lucide-react";
 import Link from "next/link";
 
-export default function TemplateTV9({ data }: { data: any }) {
+export default function TemplateHybrid({ data }: { data: any }) {
   const { heroArticles, latestArticles, trending, siteSettings } = data;
   const primaryColor = siteSettings?.primaryColor || "#E30613";
 

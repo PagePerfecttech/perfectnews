@@ -6,10 +6,10 @@ import { ChevronRight, PlayCircle } from "lucide-react";
 import Link from "next/link";
 import { getHomepageData } from "@/lib/actions";
 
-import TemplateTV9 from "@/components/templates/TemplateTV9";
-import TemplateSakshi from "@/components/templates/TemplateSakshi";
-import Template10TV from "@/components/templates/Template10TV";
-import TemplateM9 from "@/components/templates/TemplateM9";
+import TemplateHybrid from "@/components/templates/TemplateHybrid";
+import TemplateSlider from "@/components/templates/TemplateSlider";
+import TemplateDynamic from "@/components/templates/TemplateDynamic";
+import TemplateMinimal from "@/components/templates/TemplateMinimal";
 
 export default async function Home() {
   const data = await getHomepageData();
@@ -17,11 +17,11 @@ export default async function Home() {
   const hero = heroArticles[0];
 
   // Dynamic Template Router
-  const currentTemplate = (siteSettings as any)?.template;
-  if (currentTemplate === "TV9") return <TemplateTV9 data={data} />;
-  if (currentTemplate === "SAKSHI") return <TemplateSakshi data={data} />;
-  if (currentTemplate === "10TV") return <Template10TV data={data} />;
-  if (currentTemplate === "M9") return <TemplateM9 data={data} />;
+  const currentTemplate = (siteSettings as any)?.template || "HYBRID";
+  if (currentTemplate === "HYBRID") return <TemplateHybrid data={data} />;
+  if (currentTemplate === "SLIDER") return <TemplateSlider data={data} />;
+  if (currentTemplate === "DYNAMIC") return <TemplateDynamic data={data} />;
+  if (currentTemplate === "MINIMAL") return <TemplateMinimal data={data} />;
 
   return (
     <main className="min-h-screen bg-[#F8F9FA]">
