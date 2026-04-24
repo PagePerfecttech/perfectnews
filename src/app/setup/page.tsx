@@ -2,18 +2,17 @@
 
 import React, { useState } from 'react';
 import { 
-  Rocket, 
-  ShieldCheck, 
-  Layout, 
-  UserPlus, 
+  Globe, 
+  Shield, 
+  User, 
+  Check, 
   ChevronRight, 
-  CheckCircle2,
-  Globe,
+  ArrowRight,
+  Settings,
   Mail,
   Phone,
   Lock,
-  Sparkles,
-  Zap
+  ArrowLeft
 } from 'lucide-react';
 import { initializeBranding, createRootAdmin, finalizeSetup } from '@/lib/setup-actions';
 import { useRouter } from 'next/navigation';
@@ -51,226 +50,259 @@ export default function SetupWizard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0B] flex items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-[#F5F5F7] text-[#1D1D1F] flex flex-col items-center justify-center p-6 sm:p-12">
       
-      {/* Dynamic Background Accents */}
-      <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-primary/10 rounded-full blur-[120px] animate-pulse" />
-      <div className="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-secondary/10 rounded-full blur-[100px]" />
+      {/* Precision Header */}
+      <div className="mb-12 text-center space-y-2 animate-in fade-in slide-in-from-top-4 duration-700">
+        <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-black mb-4">
+          <Settings className="w-6 h-6 text-white" />
+        </div>
+        <h1 className="text-3xl font-semibold tracking-tight">Set up your portal</h1>
+        <p className="text-gray-500 text-sm max-w-sm mx-auto">Complete these steps to initialize your Perfect News experience.</p>
+      </div>
 
-      <div className="max-w-4xl w-full grid grid-cols-1 lg:grid-cols-12 bg-white/[0.02] backdrop-blur-3xl rounded-[3rem] border border-white/10 shadow-[0_0_100px_rgba(0,0,0,0.5)] overflow-hidden relative z-10">
+      <div className="max-w-[1000px] w-full grid grid-cols-1 lg:grid-cols-4 gap-12 items-start">
         
-        {/* Left Side: Onboarding Info */}
-        <div className="lg:col-span-4 bg-white/5 p-12 border-r border-white/5 hidden lg:flex flex-col justify-between">
-          <div className="space-y-8">
-            <div className="w-16 h-16 bg-primary rounded-[2rem] flex items-center justify-center shadow-2xl shadow-primary/20 rotate-3">
-              <Rocket className="w-8 h-8 text-white" />
-            </div>
-            <div className="space-y-4">
-              <h1 className="text-3xl font-black italic tracking-tighter uppercase text-white">Perfect <span className="text-primary">News</span></h1>
-              <p className="text-xs text-gray-400 font-bold uppercase tracking-[0.2em] leading-relaxed">
-                Empowering your voice with high-fidelity digital journalism.
-              </p>
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            {[
-              { id: 1, label: "Brand Identity", desc: "Core portal naming & design tokens" },
-              { id: 2, label: "Core Audit", desc: "Cloud infrastructure validation" },
-              { id: 3, label: "Superuser", desc: "Administrative access creation" },
-              { id: 4, label: "Activation", desc: "Engine deployment & launch" }
-            ].map((s) => (
-              <div key={s.id} className={`flex items-center space-x-4 transition-all duration-500 ${step === s.id ? 'opacity-100 scale-105 translate-x-2' : 'opacity-30'}`}>
-                <div className={`w-10 h-10 rounded-2xl flex items-center justify-center font-black ${step === s.id ? 'bg-primary text-white' : 'bg-white/10 text-white'}`}>
-                  {step > s.id ? <CheckCircle2 className="w-5 h-5" /> : s.id}
-                </div>
-                <div>
-                  <h3 className="text-[10px] font-black uppercase text-white tracking-widest">{s.label}</h3>
-                  <p className="text-[8px] text-gray-500 font-bold uppercase tracking-tight">{s.desc}</p>
-                </div>
+        {/* Navigation Sidebar (Apple HIG Stepper) */}
+        <div className="lg:col-span-1 space-y-8 py-2">
+          {[
+            { id: 1, label: "Identity", icon: Globe },
+            { id: 2, label: "Services", icon: Shield },
+            { id: 3, label: "Account", icon: User },
+            { id: 4, label: "Complete", icon: Check }
+          ].map((s) => (
+            <div key={s.id} className="flex items-center space-x-4">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+                step === s.id ? 'bg-black text-white shadow-lg' : 
+                step > s.id ? 'bg-gray-200 text-gray-800' : 'bg-transparent border border-gray-300 text-gray-400'
+              }`}>
+                {step > s.id ? <Check className="w-4 h-4" /> : <s.icon className="w-4 h-4" />}
               </div>
-            ))}
-          </div>
-
-          <div className="pt-8">
-            <p className="text-[9px] font-black uppercase text-gray-500 tracking-[0.3em]">v1.0.8 Enterprise Engine</p>
-          </div>
+              <span className={`text-sm font-medium transition-colors ${step >= s.id ? 'text-black' : 'text-gray-400'}`}>
+                {s.label}
+              </span>
+            </div>
+          ))}
         </div>
 
-        {/* Right Side: Interactive Forms */}
-        <div className="lg:col-span-8 p-12 lg:p-16 flex flex-col justify-center">
+        {/* Content Area */}
+        <div className="lg:col-span-3 bg-white rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-gray-100 p-8 sm:p-12 min-h-[500px] flex flex-col animate-in fade-in slide-in-from-bottom-8 duration-1000">
           
           {step === 1 && (
-            <form onSubmit={onBrandingSubmit} className="space-y-10 animate-in fade-in slide-in-from-right-8 duration-500">
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3 text-primary">
-                  <Sparkles className="w-6 h-6" />
-                  <span className="text-xs font-black uppercase tracking-[0.3em]">Step 01 / Identity</span>
-                </div>
-                <h2 className="text-4xl font-black text-white italic tracking-tighter uppercase leading-tight">
-                  Design Your <span className="text-primary">Portal</span>
-                </h2>
-                <p className="text-sm text-gray-400 font-medium">Initialize your news empire's core branding.</p>
+            <form onSubmit={onBrandingSubmit} className="space-y-10 flex-grow flex flex-col">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Portal Identity</h2>
+                <p className="text-gray-500 text-sm">Provide the core branding details for your news platform.</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">Portal Name</label>
-                  <div className="relative group">
-                    <Globe className="absolute left-5 top-5 w-5 h-5 text-gray-500 group-focus-within:text-primary transition-colors" />
-                    <input name="portalName" required className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-5 pl-14 text-white text-sm focus:ring-2 focus:ring-primary outline-none transition-all placeholder:text-gray-600" placeholder="e.g. Perfect News" />
+              <div className="space-y-8 flex-grow">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="space-y-1.5">
+                    <label className="text-[12px] font-semibold text-gray-500 ml-1">Portal Name</label>
+                    <input 
+                      name="portalName" 
+                      required 
+                      className="w-full bg-[#F5F5F7] border-0 rounded-2xl p-4 text-sm focus:ring-2 focus:ring-black outline-none transition-all" 
+                      placeholder="e.g. Perfect News" 
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-[12px] font-semibold text-gray-500 ml-1">Tagline</label>
+                    <input 
+                      name="tagline" 
+                      className="w-full bg-[#F5F5F7] border-0 rounded-2xl p-4 text-sm focus:ring-2 focus:ring-black outline-none transition-all" 
+                      placeholder="Real News, Real Voice" 
+                    />
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">Tagline</label>
-                  <input name="tagline" className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-5 text-white text-sm focus:ring-2 focus:ring-primary outline-none transition-all placeholder:text-gray-600" placeholder="e.g. Real News, Real Voice" />
-                </div>
-              </div>
 
-              <div className="space-y-4">
-                 <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1 flex items-center space-x-2">
-                   <Layout className="w-3 h-3" />
-                   <span>Select Design Architecture</span>
-                 </label>
-                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="space-y-3">
+                  <label className="text-[12px] font-semibold text-gray-500 ml-1">Select Design Architecture</label>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                     {[
-                      { id: "SLIDER", name: "Slider Auth", image: "/setup/sakshi.png" },
+                      { id: "SLIDER", name: "Slider Authority", image: "/setup/sakshi.png" },
                       { id: "DYNAMIC", name: "Dynamic Grid", image: "/setup/10tv.png" },
                       { id: "HYBRID", name: "Vision Hybrid", image: "/setup/tv9.png" },
                       { id: "MINIMAL", name: "Minimalist Pro", image: "/setup/m9.png" }
                     ].map(tpl => (
-                      <label key={tpl.id} className="relative group cursor-pointer">
+                      <label key={tpl.id} className="relative cursor-pointer group">
                         <input type="radio" name="template" value={tpl.id} className="peer hidden" defaultChecked={tpl.id === "HYBRID"} />
-                        <div className="border-2 border-white/5 bg-white/5 rounded-2xl overflow-hidden p-1 peer-checked:border-primary peer-checked:bg-primary/5 transition-all grayscale group-hover:grayscale-0 peer-checked:grayscale-0">
-                           <img src={tpl.image} className="aspect-video object-cover rounded-xl" alt={tpl.name} />
-                           <p className="text-[8px] font-black text-center py-2 text-gray-500 peer-checked:text-white uppercase tracking-tighter">{tpl.name}</p>
+                        <div className="border-2 border-transparent bg-gray-50 rounded-2xl overflow-hidden peer-checked:border-black peer-checked:bg-white transition-all ring-offset-2 peer-checked:ring-2 peer-checked:ring-black/5">
+                           <img src={tpl.image} className="aspect-video object-cover transition-transform duration-500 group-hover:scale-105" alt={tpl.name} />
+                           <p className="text-[10px] font-medium text-center py-2 text-gray-500 peer-checked:text-black">{tpl.name}</p>
                         </div>
                       </label>
                     ))}
-                 </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="space-y-1.5">
+                    <label className="text-[12px] font-semibold text-gray-500 ml-1">Contact Email</label>
+                    <input 
+                      name="contactEmail" 
+                      type="email" 
+                      required 
+                      className="w-full bg-[#F5F5F7] border-0 rounded-2xl p-4 text-sm focus:ring-2 focus:ring-black outline-none transition-all" 
+                      placeholder="contact@perfectnews.com" 
+                    />
+                  </div>
+                  <div className="space-y-1.5">
+                    <label className="text-[12px] font-semibold text-gray-500 ml-1">Contact Phone</label>
+                    <input 
+                      name="contactPhone" 
+                      className="w-full bg-[#F5F5F7] border-0 rounded-2xl p-4 text-sm focus:ring-2 focus:ring-black outline-none transition-all" 
+                      placeholder="+91 00000 00000" 
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">Support Email</label>
-                  <input name="contactEmail" type="email" required className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-5 text-white text-sm focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="news@perfect.com" />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">Hotline Number</label>
-                  <input name="contactPhone" className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-5 text-white text-sm focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="+91 00000 00000" />
-                </div>
+              <div className="pt-8 mt-auto flex justify-end">
+                <button 
+                  disabled={loading} 
+                  type="submit" 
+                  className="bg-black text-white px-8 py-4 rounded-full font-medium text-sm flex items-center space-x-2 hover:bg-gray-800 active:scale-95 transition-all"
+                >
+                  <span>{loading ? "Saving..." : "Continue"}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
               </div>
-
-              <button disabled={loading} type="submit" className="w-full bg-primary text-white p-6 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs flex items-center justify-center space-x-3 hover:scale-105 hover:shadow-[0_0_40px_rgba(227,6,19,0.3)] active:scale-95 transition-all">
-                {loading ? "Initializing..." : "Proceed to Cloud Audit"}
-                <ChevronRight className="w-5 h-5" />
-              </button>
             </form>
           )}
 
           {step === 2 && (
-            <div className="space-y-12 animate-in fade-in slide-in-from-right-8 duration-500">
-              <div className="space-y-4">
-                <div className="flex items-center space-x-3 text-primary">
-                  <Zap className="w-6 h-6 animate-pulse" />
-                  <span className="text-xs font-black uppercase tracking-[0.3em]">Step 02 / Core Audit</span>
-                </div>
-                <h2 className="text-4xl font-black text-white italic tracking-tighter uppercase leading-tight">
-                  Verifying <span className="text-primary">Engine</span>
-                </h2>
-                <p className="text-sm text-gray-400 font-medium">Validating cloud infrastructure & security protocols.</p>
+            <div className="space-y-10 flex-grow flex flex-col">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Services Audit</h2>
+                <p className="text-gray-500 text-sm">Verifying your integrated cloud services.</p>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-4 flex-grow">
                 {[
-                  { name: "PostgreSQL Database", status: "connected", label: "ORM Layer Active" },
-                  { name: "Content Delivery Network", status: "pending", label: "Resolving S3 Cluster..." },
-                  { name: "Push Notification Hub", status: "pending", label: "Syncing App Identity..." }
+                  { name: "Database Cluster", status: "connected", label: "PostgreSQL Production" },
+                  { name: "Storage Service", status: "pending", label: "Object Storage Check" },
+                  { name: "Notifications", status: "pending", label: "Push Service Hub" }
                 ].map((item, i) => (
-                  <div key={i} className="flex items-center justify-between p-6 bg-white/[0.03] rounded-[1.5rem] border border-white/5 hover:border-white/10 transition-colors">
-                    <div className="flex items-center space-x-5">
-                      <div className={`w-3 h-3 rounded-full ${item.status === 'connected' ? 'bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.6)]' : 'bg-amber-500 animate-pulse'}`} />
+                  <div key={i} className="flex items-center justify-between p-6 bg-[#F5F5F7] rounded-3xl">
+                    <div className="flex items-center space-x-4">
+                      <div className={`w-3 h-3 rounded-full ${item.status === 'connected' ? 'bg-green-500' : 'bg-orange-400 animate-pulse'}`} />
                       <div>
-                        <p className="text-[10px] font-black uppercase text-white tracking-widest leading-none mb-1">{item.name}</p>
-                        <p className="text-[8px] font-black text-gray-500 uppercase tracking-tighter">{item.label}</p>
+                        <p className="text-sm font-semibold">{item.name}</p>
+                        <p className="text-xs text-gray-500">{item.label}</p>
                       </div>
                     </div>
-                    {item.status === 'connected' && <CheckCircle2 className="w-6 h-6 text-green-500" />}
+                    {item.status === 'connected' && <Check className="w-5 h-5 text-green-600" />}
                   </div>
                 ))}
               </div>
 
-              <div className="flex space-x-4 pt-4">
-                <button onClick={handleBack} className="flex-1 bg-white/5 text-gray-400 p-6 rounded-[2rem] font-black uppercase tracking-widest text-xs border border-white/5">Back</button>
-                <button onClick={handleNext} className="flex-[2] bg-white text-black p-6 rounded-[2rem] font-black uppercase tracking-widest text-xs flex items-center justify-center space-x-3 hover:bg-primary hover:text-white transition-all">
-                  Confirm Integration
-                  <ChevronRight className="w-5 h-5" />
+              <div className="pt-8 mt-auto flex justify-between items-center">
+                <button 
+                  onClick={handleBack} 
+                  className="text-gray-500 font-medium text-sm hover:text-black transition-colors"
+                >
+                  Back
+                </button>
+                <button 
+                  onClick={handleNext} 
+                  className="bg-black text-white px-8 py-4 rounded-full font-medium text-sm flex items-center space-x-2 hover:bg-gray-800 active:scale-95 transition-all"
+                >
+                  <span>Continue</span>
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
           )}
 
           {step === 3 && (
-            <form onSubmit={onAdminSubmit} className="space-y-12 animate-in fade-in slide-in-from-right-8 duration-500">
-               <div className="space-y-4">
-                <div className="flex items-center space-x-3 text-primary">
-                  <UserPlus className="w-6 h-6" />
-                  <span className="text-xs font-black uppercase tracking-[0.3em]">Step 03 / Superuser</span>
-                </div>
-                <h2 className="text-4xl font-black text-white italic tracking-tighter uppercase leading-tight">
-                  Administrative <span className="text-primary">Master</span>
-                </h2>
-                <p className="text-sm text-gray-400 font-medium">Create your high-level security credentials.</p>
+            <form onSubmit={onAdminSubmit} className="space-y-10 flex-grow flex flex-col">
+              <div className="space-y-2">
+                <h2 className="text-2xl font-semibold tracking-tight">Superuser Account</h2>
+                <p className="text-gray-500 text-sm">Create the primary administrative account.</p>
               </div>
 
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">Full Name</label>
-                  <input name="name" required className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-5 text-white text-sm focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="Chief Administrator" />
+              <div className="space-y-6 flex-grow">
+                <div className="space-y-1.5">
+                  <label className="text-[12px] font-semibold text-gray-500 ml-1">Full Name</label>
+                  <input 
+                    name="name" 
+                    required 
+                    className="w-full bg-[#F5F5F7] border-0 rounded-2xl p-4 text-sm focus:ring-2 focus:ring-black outline-none transition-all" 
+                    placeholder="Chief Administrator" 
+                  />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1">Primary Email</label>
-                  <input name="email" type="email" required className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-5 text-white text-sm focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="admin@perfectnews.com" />
+                <div className="space-y-1.5">
+                  <label className="text-[12px] font-semibold text-gray-500 ml-1">Email Address</label>
+                  <input 
+                    name="email" 
+                    type="email" 
+                    required 
+                    className="w-full bg-[#F5F5F7] border-0 rounded-2xl p-4 text-sm focus:ring-2 focus:ring-black outline-none transition-all" 
+                    placeholder="admin@perfectnews.com" 
+                  />
                 </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase text-gray-400 tracking-widest ml-1 text-primary">Master Key (Password)</label>
-                  <div className="relative group">
-                    <Lock className="absolute left-5 top-5 w-5 h-5 text-gray-500 group-focus-within:text-primary transition-colors" />
-                    <input name="password" type="password" required className="w-full bg-white/5 border border-white/10 rounded-[1.5rem] p-5 pl-14 text-white text-sm focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="••••••••" />
-                  </div>
+                <div className="space-y-1.5">
+                  <label className="text-[12px] font-semibold text-gray-500 ml-1">Password</label>
+                  <input 
+                    name="password" 
+                    type="password" 
+                    required 
+                    className="w-full bg-[#F5F5F7] border-0 rounded-2xl p-4 text-sm focus:ring-2 focus:ring-black outline-none transition-all" 
+                    placeholder="••••••••" 
+                  />
                 </div>
               </div>
 
-              <button disabled={loading} type="submit" className="w-full bg-primary text-white p-6 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs flex items-center justify-center space-x-3 hover:scale-105 active:scale-95 transition-all">
-                {loading ? "Generating Credentials..." : "Initialize Admin Access"}
-                <ChevronRight className="w-5 h-5" />
-              </button>
+              <div className="pt-8 mt-auto flex justify-between items-center">
+                <button 
+                  onClick={handleBack} 
+                  className="text-gray-500 font-medium text-sm hover:text-black transition-colors"
+                >
+                  Back
+                </button>
+                <button 
+                  disabled={loading} 
+                  type="submit" 
+                  className="bg-black text-white px-8 py-4 rounded-full font-medium text-sm flex items-center space-x-2 hover:bg-gray-800 active:scale-95 transition-all"
+                >
+                  <span>{loading ? "Creating..." : "Initialize Portal"}</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </form>
           )}
 
           {step === 4 && (
-            <div className="text-center space-y-12 animate-in zoom-in duration-700">
-              <div className="relative inline-block">
-                <div className="w-32 h-32 bg-green-500/10 text-green-500 rounded-full flex items-center justify-center mx-auto shadow-[0_0_50px_rgba(34,197,94,0.2)]">
-                  <CheckCircle2 className="w-16 h-16" />
-                </div>
-                <div className="absolute inset-0 w-32 h-32 border-4 border-green-500 border-dashed rounded-full animate-spin-slow opacity-20" />
+            <div className="text-center space-y-10 flex-grow flex flex-col justify-center items-center">
+              <div className="w-20 h-20 bg-green-50 text-green-600 rounded-full flex items-center justify-center animate-bounce">
+                <Check className="w-10 h-10 stroke-[3px]" />
               </div>
-              
-              <div className="space-y-4">
-                <h2 className="text-5xl font-black text-white italic tracking-tighter uppercase">Ready for <span className="text-primary">Launch</span></h2>
-                <p className="text-lg text-gray-400 font-medium">Your enterprise news engine is fully operational.</p>
+              <div className="space-y-3">
+                <h2 className="text-3xl font-semibold tracking-tight">System Ready</h2>
+                <p className="text-gray-500 max-w-sm mx-auto">Your digital news engine has been successfully initialized and is ready for production.</p>
               </div>
 
-              <button onClick={onFinalize} disabled={loading} className="w-full bg-white text-black p-8 rounded-[2.5rem] font-black uppercase tracking-[0.3em] text-sm flex items-center justify-center space-x-4 shadow-[0_0_60px_rgba(255,255,255,0.1)] hover:bg-primary hover:text-white hover:scale-105 transition-all">
-                {loading ? "Igniting Engine..." : "Go to Homepage"}
-                <Rocket className="w-6 h-6" />
+              <button 
+                onClick={onFinalize} 
+                disabled={loading} 
+                className="bg-black text-white px-12 py-5 rounded-full font-semibold text-base shadow-xl shadow-black/10 hover:bg-gray-800 hover:-translate-y-1 active:scale-95 transition-all"
+              >
+                {loading ? "Starting Engine..." : "Go to Homepage"}
               </button>
             </div>
           )}
 
         </div>
       </div>
+
+      {/* Compliance Footer */}
+      <footer className="mt-12 text-center">
+        <p className="text-[11px] font-medium text-gray-400 uppercase tracking-widest flex items-center justify-center">
+          <Shield className="w-3 h-3 mr-2" />
+          SECURED BY PERFECT NEWS TECHNOLOGY
+        </p>
+      </footer>
     </div>
   );
 }
