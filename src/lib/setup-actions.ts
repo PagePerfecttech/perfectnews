@@ -14,11 +14,13 @@ export async function initializeBranding(formData: FormData) {
   const contactEmail = formData.get("contactEmail") as string;
   const contactPhone = formData.get("contactPhone") as string;
   const address = formData.get("address") as string;
+  const template = formData.get("template") as string || "ORIGINAL";
+  const theme = formData.get("theme") as string || "LIGHT";
 
   await prisma.siteSettings.upsert({
     where: { id: "default" }, // Using a fixed ID for the singleton settings
-    update: { portalName, tagline, contactEmail, contactPhone, address },
-    create: { id: "default", portalName, tagline, contactEmail, contactPhone, address },
+    update: { portalName, tagline, contactEmail, contactPhone, address, template, theme },
+    create: { id: "default", portalName, tagline, contactEmail, contactPhone, address, template, theme },
   });
 
   revalidatePath("/");

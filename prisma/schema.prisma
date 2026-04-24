@@ -178,6 +178,13 @@ model SiteSettings {
   contactEmail    String?
   contactPhone    String?
   address         String?
+  
+  // Theme & Branding
+  theme           String   @default("LIGHT") // LIGHT, DARK
+  template        String   @default("ORIGINAL") // ORIGINAL, SAKSHI, 10TV, TV9, M9
+  primaryColor    String?  @default("#E30613")
+  secondaryColor  String?  @default("#1A1A1A")
+  
   isSetupComplete Boolean  @default(false)
   updatedAt       DateTime @updatedAt
   createdAt       DateTime @default(now())

@@ -19,6 +19,27 @@ export async function getSiteSettings() {
  * PRODUCTION READY: Updates multiple site settings
  */
 export async function updateSiteSettings(settings: Record<string, string>) {
+  // 1. Update the singleton SiteSettings for core branding
+  await prisma.siteSettings.upsert({
+    where: { id: "default" },
+    update: {
+      portalName: settings.siteName || settings.portalName,
+      tagline: settings.siteDescription || settings.tagline,
+      primaryColor: settings.primaryColor,
+      template: settings.template,
+      theme: settings.theme,
+    },
+    create: {
+      id: "default",
+      portalName: settings.siteName || settings.portalName || "Prajapalana",
+      tagline: settings.siteDescription || settings.tagline || "",
+      primaryColor: settings.primaryColor || "#E30613",
+      template: settings.template || "ORIGINAL",
+      theme: settings.theme || "LIGHT",
+    }
+  });
+
+  // 2. Keep the key-value Setting table in sync for modular components
   const operations = Object.entries(settings).map(([key, value]) => 
     prisma.setting.upsert({
       where: { key },

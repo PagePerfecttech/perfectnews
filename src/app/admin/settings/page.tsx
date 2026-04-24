@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Save, Shield, Globe, Palette, Share2, Camera, Check, AlertCircle } from 'lucide-react';
-import { updateSiteSettings } from '@/lib/settings';
+import { updateSiteSettings, getSiteSettings } from '@/lib/settings';
 
 export default function SiteSettingsPage() {
   const [isSaving, setIsSaving] = useState(false);
@@ -12,11 +12,29 @@ export default function SiteSettingsPage() {
     siteName: "Prajapalana News",
     siteDescription: "Leading Telugu Hyperlocal News Portal",
     primaryColor: "#E11D48",
+    template: "ORIGINAL",
     contactEmail: "contact@prajapalana.com",
     facebookUrl: "https://facebook.com/prajapalana",
     twitterUrl: "https://twitter.com/prajapalana",
     whatsappNumber: "919988776655",
   });
+
+  useEffect(() => {
+    async function load() {
+      const settings = await getSiteSettings();
+      if (settings) {
+        setFormData(prev => ({
+          ...prev,
+          siteName: settings.portalName || prev.siteName,
+          siteDescription: settings.tagline || prev.siteDescription,
+          primaryColor: settings.primaryColor || prev.primaryColor,
+          template: (settings as any).template || prev.template,
+          contactEmail: settings.contactEmail || prev.contactEmail,
+        }));
+      }
+    }
+    load();
+  }, []);
 
   const handleSave = async () => {
     setIsSaving(true);
@@ -88,31 +106,58 @@ export default function SiteSettingsPage() {
            </div>
         </section>
 
-        {/* Visual Identity */}
-        <section className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 space-y-6">
-           <h3 className="text-sm font-black uppercase tracking-widest text-secondary flex items-center space-x-2">
-              <Palette className="w-4 h-4 text-primary" />
-              <span>Visual Identity</span>
-           </h3>
-           <div className="space-y-6">
-              <div className="space-y-2">
-                 <label className="text-[10px] font-black text-gray-400 uppercase">Primary Brand Color</label>
-                 <div className="flex items-center space-x-4">
-                    <input 
-                      type="color" 
-                      value={formData.primaryColor}
-                      onChange={(e) => setFormData({...formData, primaryColor: e.target.value})}
-                      className="w-16 h-16 rounded-xl overflow-hidden cursor-pointer border-none" 
-                    />
-                    <span className="font-mono text-sm font-bold text-gray-500 uppercase">{formData.primaryColor}</span>
-                 </div>
+        {/* Visual Identity & Template */}
+        <section className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 space-y-8 md:col-span-2">
+           <div className="flex items-center justify-between">
+              <h3 className="text-sm font-black uppercase tracking-widest text-secondary flex items-center space-x-2">
+                 <Palette className="w-4 h-4 text-primary" />
+                 <span>Frontend Design & Template</span>
+              </h3>
+              <div className="flex items-center space-x-3 bg-gray-50 px-4 py-2 rounded-xl">
+                 <label className="text-[10px] font-black text-gray-400 uppercase">Primary Color</label>
+                 <input 
+                    type="color" 
+                    value={formData.primaryColor}
+                    onChange={(e) => setFormData({...formData, primaryColor: e.target.value})}
+                    className="w-8 h-8 rounded-lg overflow-hidden cursor-pointer border-none" 
+                 />
+                 <span className="font-mono text-[10px] font-bold text-gray-400 uppercase">{formData.primaryColor}</span>
               </div>
-              <div className="p-4 bg-amber-50 rounded-xl flex items-start space-x-3">
-                 <AlertCircle className="w-4 h-4 text-amber-500 mt-1" />
-                 <p className="text-[10px] font-bold text-amber-700 uppercase leading-relaxed">
-                    Changing the brand color will automatically update all buttons, borders, and accents across the entire site.
-                 </p>
-              </div>
+           </div>
+
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                { id: "SAKSHI", name: "Sakshi Digital", image: "/setup/sakshi.png", desc: "Slider-First Authoritative Layout" },
+                { id: "10TV", name: "10TV Velocity", image: "/setup/10tv.png", desc: "High-Energy Grid with Hashtags" },
+                { id: "TV9", name: "TV9 Hybrid", image: "/setup/tv9.png", desc: "Media-Rich Hybrid Grid" },
+                { id: "M9", name: "M9 Minimalist", image: "/setup/m9.png", desc: "Premium Minimal with Box Office Ticker" }
+              ].map(tpl => (
+                <label key={tpl.id} className="relative group cursor-pointer">
+                  <input 
+                    type="radio" 
+                    name="template" 
+                    value={tpl.id} 
+                    className="peer hidden" 
+                    checked={formData.template === tpl.id}
+                    onChange={() => setFormData({...formData, template: tpl.id})}
+                  />
+                  <div className="border-2 border-gray-100 rounded-3xl overflow-hidden p-1 peer-checked:border-primary transition-all shadow-sm peer-checked:shadow-xl peer-checked:shadow-primary/10">
+                     <div className="relative aspect-video rounded-2xl overflow-hidden mb-3">
+                        <img src={tpl.image} className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all" alt={tpl.name} />
+                        <div className="absolute inset-0 bg-primary/0 peer-checked:bg-primary/5 transition-all" />
+                     </div>
+                     <div className="px-3 pb-3 space-y-1 text-center">
+                        <p className="text-[10px] font-black uppercase tracking-tight">{tpl.name}</p>
+                        <p className="text-[8px] font-bold text-gray-400 uppercase leading-none">{tpl.desc}</p>
+                     </div>
+                  </div>
+                  <div className="absolute top-3 right-3 opacity-0 peer-checked:opacity-100 transition-opacity">
+                     <div className="bg-primary text-white p-1 rounded-full shadow-lg">
+                        <Check className="w-3 h-3" />
+                     </div>
+                  </div>
+                </label>
+              ))}
            </div>
         </section>
 

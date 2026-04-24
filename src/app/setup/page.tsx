@@ -112,6 +112,30 @@ export default function SetupWizard() {
                 </div>
               </div>
 
+              {/* Template Selection */}
+              <div className="space-y-4 pt-4 border-t border-gray-50">
+                 <label className="text-[10px] font-black uppercase text-gray-400">Select Frontend Design (Clone)</label>
+                 <div className="grid grid-cols-2 gap-4">
+                    {[
+                      { id: "SAKSHI", name: "Sakshi Digital", image: "/setup/sakshi.png" },
+                      { id: "10TV", name: "10TV Velocity", image: "/setup/10tv.png" },
+                      { id: "TV9", name: "TV9 Hybrid", image: "/setup/tv9.png" },
+                      { id: "M9", name: "M9 Minimalist", image: "/setup/m9.png" }
+                    ].map(tpl => (
+                      <label key={tpl.id} className="relative group cursor-pointer">
+                        <input type="radio" name="template" value={tpl.id} className="peer hidden" defaultChecked={tpl.id === "TV9"} />
+                        <div className="border-2 border-gray-100 rounded-2xl overflow-hidden p-1 peer-checked:border-primary transition-all grayscale-[50%] peer-checked:grayscale-0 hover:grayscale-0">
+                           <img src={tpl.image} className="aspect-video object-cover rounded-xl" alt={tpl.name} />
+                           <p className="text-[9px] font-black text-center py-2 uppercase tracking-tighter">{tpl.name}</p>
+                        </div>
+                        <div className="absolute top-2 right-2 opacity-0 peer-checked:opacity-100 transition-opacity">
+                           <CheckCircle2 className="w-5 h-5 text-primary fill-white" />
+                        </div>
+                      </label>
+                    ))}
+                 </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[10px] font-black uppercase text-gray-400">Contact Email</label>
@@ -130,7 +154,7 @@ export default function SetupWizard() {
               </div>
 
               <button disabled={loading} type="submit" className="w-full bg-secondary text-white p-4 rounded-2xl font-black uppercase tracking-widest text-xs flex items-center justify-center space-x-2 hover:bg-black transition-all">
-                {loading ? "Saving..." : "Continue to Verification"}
+                {loading ? "Saving Config..." : "Continue to Verification"}
                 <ChevronRight className="w-4 h-4" />
               </button>
             </form>

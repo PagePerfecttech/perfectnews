@@ -6,9 +6,21 @@ import { ChevronRight, PlayCircle } from "lucide-react";
 import Link from "next/link";
 import { getHomepageData } from "@/lib/actions";
 
+import TemplateTV9 from "@/components/templates/TemplateTV9";
+import TemplateSakshi from "@/components/templates/TemplateSakshi";
+import Template10TV from "@/components/templates/Template10TV";
+import TemplateM9 from "@/components/templates/TemplateM9";
+
 export default async function Home() {
-  const { heroArticles, latestArticles, breakingNews, trending } = await getHomepageData();
+  const data = await getHomepageData();
+  const { heroArticles, latestArticles, siteSettings } = data;
   const hero = heroArticles[0];
+
+  // Dynamic Template Router
+  if (siteSettings?.template === "TV9") return <TemplateTV9 data={data} />;
+  if (siteSettings?.template === "SAKSHI") return <TemplateSakshi data={data} />;
+  if (siteSettings?.template === "10TV") return <Template10TV data={data} />;
+  if (siteSettings?.template === "M9") return <TemplateM9 data={data} />;
 
   return (
     <main className="min-h-screen bg-[#F8F9FA]">

@@ -26,14 +26,22 @@ export const metadata: Metadata = {
   keywords: "Telugu News, Latest News, Breaking News, Andhra Pradesh News, Telangana News",
 };
 
-export default function RootLayout({
+import { getSiteSettings } from "@/lib/settings";
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const settings = await getSiteSettings();
+  const primaryColor = settings?.primaryColor || "#E30613";
+
   return (
     <html lang="te">
-      <body className={`${inter.variable} ${notoTelugu.variable} antialiased font-sans`}>
+      <body 
+        className={`${inter.variable} ${notoTelugu.variable} antialiased font-sans`}
+        style={{ '--primary': primaryColor } as React.CSSProperties}
+      >
         {/* Google Analytics */}
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>

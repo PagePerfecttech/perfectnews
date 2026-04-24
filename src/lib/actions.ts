@@ -14,14 +14,14 @@ export async function getHomepageData() {
     prisma.article.findMany({
       where: { status: ArticleStatus.PUBLISHED, deletedAt: null },
       orderBy: { publishedAt: 'desc' },
-      take: 1,
+      take: 5,
       include: { category: true }
     }),
     // Latest Grid
     prisma.article.findMany({
       where: { status: ArticleStatus.PUBLISHED, deletedAt: null },
       orderBy: { publishedAt: 'desc' },
-      take: 8,
+      take: 12,
       include: { category: true }
     }),
     // Breaking Ticker
@@ -35,10 +35,14 @@ export async function getHomepageData() {
       where: { status: ArticleStatus.PUBLISHED, isTrending: true, deletedAt: null },
       orderBy: { viewCount: 'desc' },
       take: 5
+    }),
+    // Site Branding & Template Settings
+    prisma.siteSettings.findFirst({
+      where: { id: "default" }
     })
   ]);
 
-  return { heroArticles, latestArticles, breakingNews, trending };
+  return { heroArticles, latestArticles, breakingNews, trending, siteSettings };
 }
 
 /**

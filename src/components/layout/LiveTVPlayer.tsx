@@ -7,6 +7,11 @@ export function LiveTVPlayer() {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
 
+  const liveUrl = process.env.NEXT_PUBLIC_LIVE_TV_URL;
+  const isPlaceholder = liveUrl === "https://www.youtube.com/embed/live_id";
+
+  if (!liveUrl || isPlaceholder) return null;
+
   if (!isOpen) {
     return (
       <button 
