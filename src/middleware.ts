@@ -3,33 +3,56 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export default auth(async (req) => {
-  const { nextUrl } = req;
+  const { nextUrl, cookies } = req;
   const isLoggedIn = !!req.auth;
 
-  // 1. Skip setup check for static assets and API routes
-  const isPublicAsset = nextUrl.pathname.startsWith("/_next") || 
-                        nextUrl.pathname.startsWith("/api") || 
-                        nextUrl.pathname.startsWith("/static");
+  // 1. Skip checks for static assets and API (handled by API routes themselves if needed)
+  if (
+    nextUrl.pathname.startsWith("/_next") ||
+    nextUrl.pathname.startsWith("/api") ||
+    nextUrl.pathname.startsWith("/static") ||
+    nextUrl.pathname === "/favicon.ico"
+  ) {
+    return NextResponse.next();
+  }
 
-  if (!isPublicAsset && nextUrl.pathname !== "/setup") {
-    try {
-      const protocol = nextUrl.protocol;
-      const host = nextUrl.host;
-      const statusRes = await fetch(`${protocol}//${host}/api/setup/status`);
-      const status = await statusRes.json();
+  // 2. Setup Gating - Force users to /setup if site is not configured
+  if (nextUrl.pathname !== "/setup") {
+    const isSetupDone = cookies.get("prajapalana_setup_complete")?.value === "true";
 
-      if (!status.isComplete) {
-        return NextResponse.redirect(new URL("/setup", nextUrl));
+    if (!isSetupDone) {
+      try {
+        const protocol = nextUrl.protocol;
+        const host = nextUrl.host;
+        // In local/production protocol might vary, we construct the absolute URL for the fetch
+        const statusRes = await fetch(`${protocol}//${host}/api/setup/status`, {
+          next: { revalidate: 60 } // Cache the check result
+        });
+        
+        if (statusRes.ok) {
+          const status = await statusRes.json();
+          if (!status.isComplete) {
+            return NextResponse.redirect(new URL("/setup", nextUrl));
+          } else {
+            // Set session cookie to avoid redundant fetches in this browser session
+            const response = NextResponse.next();
+            response.cookies.set("prajapalana_setup_complete", "true", { 
+              maxAge: 31536000, // 1 year
+              path: "/" 
+            });
+            return response;
+          }
+        }
+      } catch (e) {
+        console.error("Setup Check Error:", e);
       }
-    } catch (e) {
-      console.error("Setup Check Failed:", e);
     }
   }
 
-  // 2. Protect Admin Routes
+  // 3. Admin Access Control
   if (nextUrl.pathname.startsWith("/admin")) {
     if (!isLoggedIn) {
-      return NextResponse.redirect(new URL("/api/auth/signin", nextUrl));
+      return NextResponse.redirect(new URL("/login", nextUrl));
     }
     
     const role = (req.auth?.user as any)?.role;
@@ -41,7 +64,11 @@ export default auth(async (req) => {
   return NextResponse.next();
 });
 
-// Configure protected routes
+// Match all request paths except for the ones starting with:
+// - api (API routes)
+// - _next/static (static files)
+// - _next/image (image optimization files)
+// - favicon.ico (favicon file)
 export const config = {
-  matcher: ["/admin/:path*", "/api/admin/:path*"],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

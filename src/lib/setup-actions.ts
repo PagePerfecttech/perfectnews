@@ -3,6 +3,7 @@
 import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { hash } from "bcryptjs";
+import { cookies } from "next/headers";
 
 /**
  * Initializes the Portal Branding
@@ -53,6 +54,14 @@ export async function finalizeSetup() {
   await prisma.siteSettings.update({
     where: { id: "default" },
     data: { isSetupComplete: true },
+  });
+
+  const cookieStore = await cookies();
+  cookieStore.set("prajapalana_setup_complete", "true", { 
+    maxAge: 31536000, 
+    path: "/",
+    httpOnly: false, // Middleware needs to read it
+    secure: process.env.NODE_ENV === "production",
   });
 
   revalidatePath("/");
