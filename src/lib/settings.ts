@@ -6,9 +6,18 @@ import { revalidatePath } from "next/cache";
 /**
  * PRODUCTION READY: Fetches portal branding and installation status
  */
-export async function getSiteSettings() {
+export async function getSiteSettings(): Promise<{
+  id?: string;
+  portalName: string;
+  tagline: string;
+  isSetupComplete: boolean;
+  primaryColor: string;
+  template: string;
+  theme: string;
+  contactEmail?: string | null;
+}> {
   const settings = await prisma.siteSettings.findFirst();
-  return settings || {
+  return (settings as any) || {
     portalName: "Prajapalana",
     tagline: "మీ స్వరం, మీ అండ",
     isSetupComplete: false,

@@ -9,7 +9,7 @@ import { ArticleStatus } from "@prisma/client";
  * PRODUCTION READY: Fetches homepage content with optimized performance
  */
 export async function getHomepageData() {
-  const [heroArticles, latestArticles, breakingNews, trending] = await Promise.all([
+  const [heroArticles, latestArticles, breakingNews, trending, siteSettings] = await Promise.all([
     // Featured Hero
     prisma.article.findMany({
       where: { status: ArticleStatus.PUBLISHED, deletedAt: null },
