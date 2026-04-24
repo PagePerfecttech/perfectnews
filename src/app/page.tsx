@@ -1,7 +1,4 @@
-import { HeaderContainer } from "@/components/layout/HeaderContainer";
-import { BreakingNews } from "@/components/layout/BreakingNews";
 import { MarketTicker } from "@/components/layout/MarketTicker";
-import { Footer } from "@/components/layout/Footer";
 import { HeroCard, NewsCard, ShortsCard } from "@/components/ui/NewsCards";
 import { NewsPoll } from "@/components/ui/NewsPoll";
 import { Newsletter } from "@/components/ui/Newsletter";
@@ -16,8 +13,6 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-[#F8F9FA]">
       <MarketTicker />
-      <BreakingNews news={breakingNews} />
-      <HeaderContainer />
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-8">
@@ -165,8 +160,6 @@ export default async function Home() {
       <section className="container mx-auto px-4 py-12">
         <Newsletter />
       </section>
-
-      <Footer />
     </main>
   );
 }

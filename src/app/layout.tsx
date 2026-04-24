@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Noto_Sans_Telugu } from "next/font/google";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { BreakingNews } from "@/components/layout/BreakingNews";
 import { LiveTVPlayer } from "@/components/layout/LiveTVPlayer";
 import "./globals.css";
 
@@ -30,7 +33,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="te">
-      <body className={`${inter.variable} ${notoTelugu.variable} antialiased`}>
+      <body className={`${inter.variable} ${notoTelugu.variable} antialiased font-sans`}>
+        {/* Google Analytics */}
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
             <script async src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`} />
@@ -46,7 +50,24 @@ export default function RootLayout({
             />
           </>
         )}
-        {children}
+        
+        {/* OneSignal Web Push */}
+        {process.env.ONESIGNAL_APP_ID && (
+          <script
+            src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
+            async
+          />
+        )}
+
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <BreakingNews />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+        </div>
+
         <LiveTVPlayer />
       </body>
     </html>
