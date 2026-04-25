@@ -11,13 +11,14 @@ import TemplateSlider from "@/components/templates/TemplateSlider";
 import TemplateDynamic from "@/components/templates/TemplateDynamic";
 import TemplateMinimal from "@/components/templates/TemplateMinimal";
 
-export default async function Home() {
+export default async function Home({ searchParams }: { searchParams: Promise<{ template?: string }> }) {
   const data = await getHomepageData();
   const { heroArticles, latestArticles, breakingNews, trending, siteSettings } = data;
+  const params = await searchParams;
   const hero = heroArticles[0];
 
-  // Dynamic Template Router
-  const currentTemplate = (siteSettings as any)?.template || "HYBRID";
+  // Dynamic Template Router (with preview override)
+  const currentTemplate = params.template || (siteSettings as any)?.template || "HYBRID";
   if (currentTemplate === "HYBRID") return <TemplateHybrid data={data} />;
   if (currentTemplate === "SLIDER") return <TemplateSlider data={data} />;
   if (currentTemplate === "DYNAMIC") return <TemplateDynamic data={data} />;

@@ -16,10 +16,10 @@ export default function TemplateHybrid({ data }: { data: any }) {
     <main className="min-h-screen bg-white">
       <MarketTicker />
 
-      {/* TV9 Style Hero Grid */}
+      {/* Hybrid Hero Grid Area */}
       <section className="container mx-auto px-4 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-          {/* Main Lead (TV9 Large Overlay) */}
+          {/* Main Lead Overlay */}
           <div className="lg:col-span-2 row-span-2">
             {heroArticles[0] && (
               <div className="relative h-full min-h-[400px] rounded-lg overflow-hidden group cursor-pointer shadow-xl">
@@ -58,7 +58,7 @@ export default function TemplateHybrid({ data }: { data: any }) {
             </div>
           </div>
 
-          {/* Right Video Promo (TV9 Signature) */}
+          {/* Right Video Promo Area */}
           <div className="lg:col-span-1">
              <div className="bg-gray-900 rounded-lg p-4 h-full flex flex-col justify-between">
                 <div className="aspect-video relative rounded overflow-hidden mb-4">
@@ -66,7 +66,7 @@ export default function TemplateHybrid({ data }: { data: any }) {
                    <PlayCircle className="absolute inset-0 m-auto text-white w-12 h-12" />
                 </div>
                 <h4 className="text-white text-xs font-black uppercase mb-2">Watch Live TV</h4>
-                <p className="text-gray-400 text-[10px] leading-relaxed">Stay updated with the latest Telugu news around the clock with TV9's premium live coverage.</p>
+                <p className="text-gray-400 text-[10px] leading-relaxed">Stay updated with the latest Telugu news around the clock with premium live coverage.</p>
                 <button className="mt-4 w-full py-2 bg-primary text-white font-black text-[10px] rounded hover:bg-red-700 transition-all uppercase tracking-widest">
                    Join Live Stream
                 </button>
@@ -75,7 +75,7 @@ export default function TemplateHybrid({ data }: { data: any }) {
         </div>
       </section>
 
-      {/* Major News Grid (TV9 Style Rows) */}
+      {/* Major News Grid Area */}
       <section className="container mx-auto px-4 py-12 bg-gray-50">
         <div className="flex items-center space-x-4 mb-10">
            <div className="h-px bg-gray-200 flex-1" />

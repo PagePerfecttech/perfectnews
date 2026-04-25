@@ -12,6 +12,8 @@ import {
   Bell
 } from 'lucide-react';
 import Link from 'next/link';
+import { seedMockData } from '@/lib/seed-actions';
+import { Database } from 'lucide-react';
 
 const STATS = [
   { label: "Total Page Views", value: "1.2M", icon: Eye, color: "text-blue-600", bg: "bg-blue-50", growth: "+12.5%" },
@@ -37,13 +39,25 @@ export default function AdminDashboard() {
               <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
               <div className="flex flex-col">
                  <span className="text-[8px] font-black text-gray-400 uppercase tracking-widest leading-none">Active Clone</span>
-                 <span className="text-[10px] font-black uppercase tracking-tight">TV9 Hybrid Hybrid Grid</span>
+                 <span className="text-[10px] font-black uppercase tracking-tight">Hybrid Grid Template</span>
               </div>
               <Layout className="w-4 h-4 text-primary ml-2" />
            </div>
-           <button className="bg-secondary text-white p-3 rounded-2xl shadow-lg hover:scale-110 transition-all">
-              <Bell className="w-5 h-5" />
-           </button>
+            <button 
+              onClick={async () => {
+                if(confirm('Seed professional mock data? This will add high-fidelity news to your site.')) {
+                  const res = await seedMockData();
+                  alert(res.message);
+                }
+              }}
+              className="bg-white border border-gray-100 text-secondary p-3 rounded-2xl shadow-sm hover:scale-110 transition-all flex items-center space-x-2"
+            >
+               <Database className="w-5 h-5 text-primary" />
+               <span className="text-[10px] font-black uppercase tracking-widest hidden md:inline">Seed Data</span>
+            </button>
+            <button className="bg-secondary text-white p-3 rounded-2xl shadow-lg hover:scale-110 transition-all">
+               <Bell className="w-5 h-5" />
+            </button>
         </div>
       </div>
 
@@ -149,7 +163,7 @@ export default function AdminDashboard() {
               <div className="space-y-6">
                  {[
                    { type: 'URGENT', msg: 'Traffic surge detected from Andhra Pradesh. Scale resources?', color: 'bg-red-500' },
-                   { type: 'SYSTEM', msg: 'Vercel production build successful. TV9 Hybrid Template active.', color: 'bg-green-500' },
+                   { type: 'SYSTEM', msg: 'Vercel production build successful. Hybrid Template active.', color: 'bg-green-500' },
                    { type: 'PENDING', msg: '12 new articles awaiting Editor review.', color: 'bg-orange-500' }
                  ].map((alert, i) => (
                    <div key={i} className="flex items-start space-x-4 group cursor-pointer">

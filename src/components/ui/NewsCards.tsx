@@ -16,7 +16,7 @@ export function HeroCard({ title, category, image, date, href, priority = false 
   return (
     <Link href={href} className="group relative block w-full h-[400px] md:h-[500px] overflow-hidden rounded-xl shadow-2xl">
       <Image 
-        src={image} 
+        src={image || "/placeholder.jpg"} 
         alt={title} 
         fill 
         priority={priority}
@@ -31,7 +31,7 @@ export function HeroCard({ title, category, image, date, href, priority = false 
           {title}
         </h2>
         <p className="text-gray-300 text-xs mt-3 font-medium uppercase tracking-tighter">
-          {date} • BY TELUGU POST TEAM
+          {date} • BY PERFECT NEWS TEAM
         </p>
       </div>
     </Link>
@@ -43,7 +43,7 @@ export function NewsCard({ title, category, image, date, href }: CardProps) {
     <Link href={href} className="group flex flex-col space-y-3">
       <div className="relative aspect-video overflow-hidden rounded-lg shadow-md">
         <Image 
-          src={image} 
+          src={image || "/placeholder.jpg"} 
           alt={title} 
           fill 
           className="object-cover transition-transform duration-500 group-hover:scale-105"

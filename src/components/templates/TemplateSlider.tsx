@@ -17,7 +17,7 @@ export default function TemplateSlider({ data }: { data: any }) {
     <main className="min-h-screen bg-[#F0F2F5]">
       <MarketTicker />
 
-      {/* Sakshi Style Header Banner (Ad Space) */}
+      {/* Slider Style Header Banner (Ad Space) */}
       <div className="container mx-auto px-4 py-4 hidden md:block">
          <div className="w-full h-[90px] bg-white border border-gray-200 rounded flex items-center justify-center text-gray-400 font-bold text-xs uppercase italic">
             Top Banner Advertisement Space
@@ -28,11 +28,11 @@ export default function TemplateSlider({ data }: { data: any }) {
       <section className="container mx-auto px-4 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           
-          {/* Main Slider (Sakshi Style) */}
+          {/* Main Slider Area */}
           <div className="lg:col-span-8 space-y-4">
              {currentHero && (
                <div className="relative aspect-[16/9] bg-black rounded-lg overflow-hidden shadow-2xl group">
-                  <img src={currentHero.featuredImage} className="w-full h-full object-cover opacity-80" alt="Hero" />
+                  <img src={currentHero.featuredImage || "/placeholder.jpg"} className="w-full h-full object-cover opacity-80" alt="Hero" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
                   
                   {/* Slider Controls */}
@@ -70,7 +70,7 @@ export default function TemplateSlider({ data }: { data: any }) {
              )}
           </div>
 
-          {/* Sakshi Style Tabbed Sidebar */}
+          {/* Tabbed Sidebar Area */}
           <div className="lg:col-span-4 flex flex-col">
              <div className="bg-white rounded-t-lg border-b border-gray-100 flex overflow-hidden">
                 <button 

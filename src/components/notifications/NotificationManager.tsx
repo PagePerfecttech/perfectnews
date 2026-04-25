@@ -18,7 +18,7 @@ export function NotificationManager() {
     setShowPrompt(false);
     
     if (res === 'granted') {
-      new Notification("Welcome to Prajapalana News", {
+      new Notification("Welcome to Perfect News", {
         body: "You will now receive real-time breaking news alerts.",
         icon: "/logo.png"
       });

@@ -14,7 +14,7 @@ export default function TemplateDynamic({ data }: { data: any }) {
 
   return (
     <main className="min-h-screen bg-white">
-      {/* 10TV Red/Black Top Ticker */}
+      {/* Dynamic Top Ticker Area */}
       <div className="bg-black text-white py-2">
          <div className="container mx-auto px-4 flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -36,7 +36,7 @@ export default function TemplateDynamic({ data }: { data: any }) {
 
       <MarketTicker />
 
-      {/* 10TV Style Multi-Grid Hero */}
+      {/* Multi-Grid Hero Area */}
       <section className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           
@@ -45,7 +45,7 @@ export default function TemplateDynamic({ data }: { data: any }) {
              {heroArticles.slice(0, 2).map((article: any) => (
                <div key={article.id} className="group cursor-pointer space-y-4">
                   <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-md group-hover:shadow-xl transition-all">
-                     <img src={article.featuredImage} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                     <img src={article.featuredImage || "/placeholder.jpg"} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                   </div>
                   <div className="space-y-2">
                      <span className="text-primary font-black text-[10px] uppercase tracking-tighter italic">
@@ -60,7 +60,7 @@ export default function TemplateDynamic({ data }: { data: any }) {
              ))}
           </div>
 
-          {/* Right Sidebar List (10TV Bulleted Style) */}
+          {/* Sidebar Area */}
           <div className="lg:col-span-1 bg-gray-50 rounded-2xl p-6 border border-gray-100">
              <div className="flex items-center justify-between mb-6">
                 <h3 className="font-black text-sm italic flex items-center space-x-2">

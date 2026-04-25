@@ -9,7 +9,7 @@ import Link from "next/link";
 export default function TemplateMinimal({ data }: { data: any }) {
   const { heroArticles, latestArticles, trending, siteSettings } = data;
   
-  // Mock Box Office Data for M9 Signature Widget
+  // Mock Box Office Data for Premium Widget
   const boxOffice = [
     { title: "Tillu Square", total: "$2.8M", status: "HIT" },
     { title: "Family Star", total: "$1.2M", status: "AVG" },
@@ -21,7 +21,7 @@ export default function TemplateMinimal({ data }: { data: any }) {
     <main className="min-h-screen bg-white font-sans">
       <MarketTicker />
 
-      {/* M9 Signature Box Office Ticker */}
+      {/* Premium Box Office Ticker */}
       <div className="bg-gray-50 border-y border-gray-100 py-3">
          <div className="container mx-auto px-4 flex items-center overflow-x-auto no-scrollbar scrollbar-hide space-x-8">
             <div className="flex items-center space-x-2 flex-shrink-0 border-r border-gray-200 pr-8">
@@ -40,7 +40,7 @@ export default function TemplateMinimal({ data }: { data: any }) {
          </div>
       </div>
 
-      {/* M9 Style Premium Hero */}
+      {/* Premium Hero Style */}
       <section className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           
@@ -49,7 +49,7 @@ export default function TemplateMinimal({ data }: { data: any }) {
              {heroArticles[0] && (
                <div className="group cursor-pointer space-y-6">
                   <div className="aspect-video rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 group-hover:shadow-primary/10">
-                     <img src={heroArticles[0].featuredImage} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Feature" />
+                     <img src={heroArticles[0].featuredImage || "/placeholder.jpg"} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" alt="Feature" />
                   </div>
                   <div className="space-y-4">
                      <div className="flex items-center space-x-3">
@@ -68,7 +68,7 @@ export default function TemplateMinimal({ data }: { data: any }) {
              )}
           </div>
 
-          {/* M9 Style Clean Sidebar */}
+          {/* Premium Sidebar Area */}
           <div className="lg:col-span-5 space-y-12">
              <div>
                 <h3 className="text-sm font-black mb-8 flex items-center space-x-2 tracking-widest text-secondary">
@@ -79,7 +79,7 @@ export default function TemplateMinimal({ data }: { data: any }) {
                    {latestArticles.slice(1, 4).map((article: any) => (
                      <Link key={article.id} href={`/news/${article.slug}`} className="flex space-x-6 group">
                         <div className="w-32 h-20 rounded-xl overflow-hidden flex-shrink-0 shadow-md">
-                           <img src={article.featuredImage} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+                           <img src={article.featuredImage || "/placeholder.jpg"} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
                         </div>
                         <div className="space-y-1">
                            <h4 className="text-sm font-bold telugu-text leading-snug group-hover:text-primary transition-colors line-clamp-2">

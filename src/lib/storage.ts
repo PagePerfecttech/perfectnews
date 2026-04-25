@@ -10,7 +10,7 @@ const s3Client = new S3Client({
   },
 });
 
-const BUCKET_NAME = process.env.STORAGE_BUCKET_NAME || "prajapalana-media";
+const BUCKET_NAME = process.env.STORAGE_BUCKET_NAME || "perfectnews-media";
 
 /**
  * Uploads a file to the CDN

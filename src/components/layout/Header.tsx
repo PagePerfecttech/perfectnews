@@ -13,8 +13,8 @@ interface HeaderProps {
   };
 }
 
-export function Header({ siteInfo }: HeaderProps = { siteInfo: { name: "PRAJAPALANA", tagline: "మీ స్వరం, మీ అండ", primaryColor: "#E11D48" } }) {
-  const finalSiteInfo = siteInfo || { name: "PRAJAPALANA", tagline: "మీ స్వరం, మీ అండ", primaryColor: "#E11D48" };
+export function Header({ siteInfo }: HeaderProps = { siteInfo: { name: "PERFECT NEWS", tagline: "మీ స్వరం, మీ అండ", primaryColor: "#E11D48" } }) {
+  const finalSiteInfo = siteInfo || { name: "PERFECT NEWS", tagline: "మీ స్వరం, మీ అండ", primaryColor: "#E11D48" };
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 

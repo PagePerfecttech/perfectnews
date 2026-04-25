@@ -5,9 +5,9 @@ import { UserPlus, Shield, Mail, Trash2, Edit, Check, UserCircle } from 'lucide-
 
 export default function UserManagementPage() {
   const [users, setUsers] = useState([
-    { id: '1', name: 'Admin User', email: 'admin@prajapalana.com', role: 'ADMIN', status: 'ACTIVE' },
-    { id: '2', name: 'Ravi Kumar', email: 'ravi@prajapalana.com', role: 'EDITOR', status: 'ACTIVE' },
-    { id: '3', name: 'Sita Devi', email: 'sita@prajapalana.com', role: 'REPORTER', status: 'INACTIVE' },
+    { id: '1', name: 'Admin User', email: 'admin@perfectnews.com', role: 'ADMIN', status: 'ACTIVE' },
+    { id: '2', name: 'Ravi Kumar', email: 'ravi@perfectnews.com', role: 'EDITOR', status: 'ACTIVE' },
+    { id: '3', name: 'Sita Devi', email: 'sita@perfectnews.com', role: 'REPORTER', status: 'INACTIVE' },
   ]);
 
   return (

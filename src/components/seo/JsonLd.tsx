@@ -16,10 +16,10 @@ export function JsonLd({ type, data }: JsonLdProps) {
   if (type === 'NewsArticle') {
     schema.publisher = {
       "@type": "Organization",
-      "name": "Prajapalana News",
+      "name": "Perfect News",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://prajapalana.com/logo.png"
+        "url": "https://perfectnews.com/logo.png"
       }
     };
   }

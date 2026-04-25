@@ -18,11 +18,11 @@ export async function getSiteSettings(): Promise<{
 }> {
   const settings = await prisma.siteSettings.findFirst();
   return (settings as any) || {
-    portalName: "Prajapalana",
+    portalName: "Perfect News",
     tagline: "మీ స్వరం, మీ అండ",
     isSetupComplete: false,
     primaryColor: "#E30613",
-    template: "ORIGINAL",
+    template: "HYBRID",
     theme: "LIGHT"
   };
 }
@@ -43,10 +43,10 @@ export async function updateSiteSettings(settings: Record<string, string>) {
     },
     create: {
       id: "default",
-      portalName: settings.siteName || settings.portalName || "Prajapalana",
+      portalName: settings.siteName || settings.portalName || "Perfect News",
       tagline: settings.siteDescription || settings.tagline || "",
       primaryColor: settings.primaryColor || "#E30613",
-      template: settings.template || "ORIGINAL",
+      template: settings.template || "HYBRID",
       theme: settings.theme || "LIGHT",
     }
   });

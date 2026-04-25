@@ -172,7 +172,7 @@ model EPaperHotspot {
 }
 model SiteSettings {
   id              String   @id @default(cuid())
-  portalName      String   @default("Prajapalana")
+  portalName      String   @default("Perfect News")
   logoUrl         String?
   tagline         String?
   contactEmail    String?
@@ -181,7 +181,7 @@ model SiteSettings {
   
   // Theme & Branding
   theme           String   @default("LIGHT") // LIGHT, DARK
-  template        String   @default("ORIGINAL") // ORIGINAL, SAKSHI, 10TV, TV9, M9
+  template        String   @default("HYBRID") // SLIDER, DYNAMIC, HYBRID, MINIMAL
   primaryColor    String?  @default("#E30613")
   secondaryColor  String?  @default("#1A1A1A")
   

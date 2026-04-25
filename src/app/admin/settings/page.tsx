@@ -9,13 +9,13 @@ export default function SiteSettingsPage() {
   const [success, setSuccess] = useState(false);
   
   const [formData, setFormData] = useState({
-    siteName: "Prajapalana News",
+    siteName: "Perfect News",
     siteDescription: "Leading Telugu Hyperlocal News Portal",
     primaryColor: "#E11D48",
     template: "ORIGINAL",
-    contactEmail: "contact@prajapalana.com",
-    facebookUrl: "https://facebook.com/prajapalana",
-    twitterUrl: "https://twitter.com/prajapalana",
+    contactEmail: "contact@perfectnews.com",
+    facebookUrl: "https://facebook.com/perfectnews",
+    twitterUrl: "https://twitter.com/perfectnews",
     whatsappNumber: "919988776655",
   });
 
@@ -151,11 +151,22 @@ export default function SiteSettingsPage() {
                         <p className="text-[8px] font-bold text-gray-400 uppercase leading-none">{tpl.desc}</p>
                      </div>
                   </div>
-                  <div className="absolute top-3 right-3 opacity-0 peer-checked:opacity-100 transition-opacity">
-                     <div className="bg-primary text-white p-1 rounded-full shadow-lg">
-                        <Check className="w-3 h-3" />
-                     </div>
-                  </div>
+                   <div className="absolute top-3 right-3 flex flex-col items-end space-y-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="bg-primary text-white p-1 rounded-full shadow-lg peer-checked:block hidden">
+                         <Check className="w-3 h-3" />
+                      </div>
+                      <button 
+                        type="button"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          window.open(`/?template=${tpl.id}`, '_blank');
+                        }}
+                        className="bg-white/90 backdrop-blur-sm text-secondary p-2 rounded-xl shadow-lg hover:bg-primary hover:text-white transition-all"
+                      >
+                         <Eye className="w-4 h-4" />
+                      </button>
+                   </div>
                 </label>
               ))}
            </div>
