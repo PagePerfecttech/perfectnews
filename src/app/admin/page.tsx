@@ -1,4 +1,3 @@
-import React from 'react';
 import { 
   Eye, 
   FileEdit, 
@@ -9,11 +8,11 @@ import {
   Layout,
   BarChart3,
   Users,
-  Bell
+  Bell,
+  Database
 } from 'lucide-react';
 import Link from 'next/link';
 import { seedMockData } from '@/lib/seed-actions';
-import { Database } from 'lucide-react';
 
 const STATS = [
   { label: "Total Page Views", value: "1.2M", icon: Eye, color: "text-blue-600", bg: "bg-blue-50", growth: "+12.5%" },

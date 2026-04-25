@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Save, Shield, Globe, Palette, Share2, Camera, Check, AlertCircle } from 'lucide-react';
+import { Save, Shield, Globe, Palette, Share2, Camera, Check, AlertCircle, Eye } from 'lucide-react';
 import { updateSiteSettings, getSiteSettings } from '@/lib/settings';
 
 export default function SiteSettingsPage() {
