@@ -46,7 +46,7 @@ export function MonetizationClient({ ads }: { ads: Ad[] }) {
             <h1 className="text-3xl font-black italic tracking-tighter uppercase text-gray-900">Monetization <span className="text-gray-400">Hub</span></h1>
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Revenue & Advertisement Management</p>
          </div>
-         <form action={createAdvertisement}>
+         <form action={async (formData) => { await createAdvertisement(formData); }}>
             <input type="hidden" name="name" value={`Campaign ${new Date().getTime()}`} />
             <input type="hidden" name="zone" value={activeZone} />
             <button type="submit" className="bg-black text-white px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest shadow-sm hover:bg-gray-800 transition-all flex items-center space-x-2">
