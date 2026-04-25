@@ -26,7 +26,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ t
   const hero = heroArticles[0];
 
   // Dynamic Template Router (with preview override)
-  const currentTemplate = params.template || (siteSettings as any)?.template || "HYBRID";
+  const currentTemplate = params.template || siteSettings.template || "HYBRID";
   if (currentTemplate === "HYBRID") return <TemplateHybrid data={data} />;
   if (currentTemplate === "SLIDER") return <TemplateSlider data={data} />;
   if (currentTemplate === "DYNAMIC") return <TemplateDynamic data={data} />;

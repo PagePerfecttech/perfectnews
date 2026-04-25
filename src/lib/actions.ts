@@ -7,6 +7,8 @@ import { ArticleStatus } from "@prisma/client";
 import { auth } from "@/lib/auth";
 import type { HomepageData } from "@/types";
 
+import { getSiteSettings } from "./settings";
+
 /**
  * Fetches homepage content with optimized parallel queries
  */
@@ -34,9 +36,7 @@ export async function getHomepageData(): Promise<HomepageData> {
       orderBy: { viewCount: 'desc' },
       take: 5
     }),
-    prisma.siteSettings.findFirst({
-      where: { id: "default" }
-    })
+    getSiteSettings()
   ]);
 
   return { heroArticles, latestArticles, breakingNews, trending, siteSettings };

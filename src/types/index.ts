@@ -25,7 +25,7 @@ export interface HomepageData {
   latestArticles: ArticleWithCategory[];
   breakingNews: Article[];
   trending: Article[];
-  siteSettings: SiteSettings | null;
+  siteSettings: SiteInfo;
 }
 
 // ─── Admin Dashboard Stats ────────────────────────────────────────────────────

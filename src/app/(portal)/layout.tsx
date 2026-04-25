@@ -12,7 +12,7 @@ export default async function PortalLayout({
   children: React.ReactNode;
 }) {
   const data = await getHomepageData();
-  const siteInfo = data.siteSettings || await getSiteSettings();
+  const siteInfo = data.siteSettings;
 
   return (
     <div className="flex flex-col min-h-screen">
