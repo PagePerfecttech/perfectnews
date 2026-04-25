@@ -22,6 +22,7 @@ interface Ad {
   zone: string;
   type: string;
   content: string;
+  link?: string | null;
   isActive: boolean;
 }
 
