@@ -37,6 +37,13 @@ export async function getSiteSettings(): Promise<SiteInfo> {
       gold: getSetting('market_gold') || "₹72,450",
       sensex: getSetting('market_sensex') || "74,248.12",
       usdInr: getSetting('market_usdInr') || "₹83.45",
+    },
+    socials: {
+      whatsapp: getSetting('whatsappNumber') || DEFAULT_SITE_INFO.socials.whatsapp,
+      facebook: getSetting('facebookUrl') || DEFAULT_SITE_INFO.socials.facebook,
+      twitter: getSetting('twitterUrl') || DEFAULT_SITE_INFO.socials.twitter,
+      instagram: getSetting('instagramUrl') || DEFAULT_SITE_INFO.socials.instagram,
+      youtube: getSetting('youtubeUrl') || DEFAULT_SITE_INFO.socials.youtube,
     }
   };
 }

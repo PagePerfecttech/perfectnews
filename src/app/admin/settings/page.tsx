@@ -36,10 +36,13 @@ export default function SiteSettingsPage() {
           template: settings.template || prev.template,
           contactEmail: settings.contactEmail || prev.contactEmail,
           liveTvUrl: settings.liveTvUrl || prev.liveTvUrl,
-          market_weather: settings.market_weather || prev.market_weather,
-          market_gold: settings.market_gold || prev.market_gold,
-          market_sensex: settings.market_sensex || prev.market_sensex,
-          market_usdInr: settings.market_usdInr || prev.market_usdInr,
+          market_weather: settings.marketTicker?.weather || prev.market_weather,
+          market_gold: settings.marketTicker?.gold || prev.market_gold,
+          market_sensex: settings.marketTicker?.sensex || prev.market_sensex,
+          market_usdInr: settings.marketTicker?.usdInr || prev.market_usdInr,
+          facebookUrl: settings.socials?.facebook || prev.facebookUrl,
+          twitterUrl: settings.socials?.twitter || prev.twitterUrl,
+          whatsappNumber: settings.socials?.whatsapp || prev.whatsappNumber,
         }));
       }
     }
