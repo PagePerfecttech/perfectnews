@@ -19,8 +19,7 @@ export default function TemplateMinimal({ data }: { data: HomepageData }) {
   ];
 
   return (
-    <main className="min-h-screen bg-white font-sans">
-      <MarketTicker />
+    <main className="min-h-screen bg-[#fafafa]">
 
       {/* Premium Box Office Ticker */}
       <div className="bg-gray-50 border-y border-gray-100 py-3">

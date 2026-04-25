@@ -16,7 +16,6 @@ export default function TemplateSlider({ data }: { data: HomepageData }) {
 
   return (
     <main className="min-h-screen bg-[#F0F2F5]">
-      <MarketTicker />
 
       {/* Slider Style Header Banner (Ad Space) */}
       <div className="container mx-auto px-4 py-4 hidden md:block">

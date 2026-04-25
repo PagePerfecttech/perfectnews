@@ -15,7 +15,6 @@ export default function TemplateHybrid({ data }: { data: HomepageData }) {
 
   return (
     <main className="min-h-screen bg-white">
-      <MarketTicker />
 
       {/* Hybrid Hero Grid Area */}
       <section className="container mx-auto px-4 py-6">

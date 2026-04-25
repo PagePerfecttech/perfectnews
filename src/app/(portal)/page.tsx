@@ -26,7 +26,6 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ t
 
   return (
     <main className="min-h-screen bg-[#F8F9FA]">
-      <MarketTicker />
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-8">
