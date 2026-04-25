@@ -37,8 +37,14 @@ export async function createRootAdmin(formData: FormData) {
 
   const hashedPassword = await hash(password, 12);
 
-  await prisma.user.create({
-    data: {
+  await prisma.user.upsert({
+    where: { email },
+    update: {
+      name,
+      password: hashedPassword,
+      role: "ADMIN",
+    },
+    create: {
       name,
       email,
       password: hashedPassword,
@@ -59,7 +65,7 @@ export async function finalizeSetup() {
   });
 
   const cookieStore = await cookies();
-  cookieStore.set("prajapalana_setup_complete", "true", { 
+  cookieStore.set("perfect_news_setup_complete", "true", { 
     maxAge: 31536000, 
     path: "/",
     httpOnly: false, // Middleware needs to read it

@@ -18,7 +18,7 @@ export default auth(async (req) => {
 
   // 2. Setup Gating - Force users to /setup if site is not configured
   if (nextUrl.pathname !== "/setup") {
-    const isSetupDone = cookies.get("prajapalana_setup_complete")?.value === "true";
+    const isSetupDone = cookies.get("perfect_news_setup_complete")?.value === "true";
 
     if (!isSetupDone) {
       try {
@@ -36,7 +36,7 @@ export default auth(async (req) => {
           } else {
             // Set session cookie to avoid redundant fetches in this browser session
             const response = NextResponse.next();
-            response.cookies.set("prajapalana_setup_complete", "true", { 
+            response.cookies.set("perfect_news_setup_complete", "true", { 
               maxAge: 31536000, // 1 year
               path: "/" 
             });
