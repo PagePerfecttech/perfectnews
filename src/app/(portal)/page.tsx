@@ -5,6 +5,7 @@ import { Newsletter } from "@/components/ui/Newsletter";
 import { ChevronRight, PlayCircle } from "lucide-react";
 import Link from "next/link";
 import { getHomepageData } from "@/lib/actions";
+import { seedDemoData } from "@/lib/demo-seeder";
 
 import TemplateHybrid from "@/components/templates/TemplateHybrid";
 import TemplateSlider from "@/components/templates/TemplateSlider";
@@ -12,7 +13,14 @@ import TemplateDynamic from "@/components/templates/TemplateDynamic";
 import TemplateMinimal from "@/components/templates/TemplateMinimal";
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ template?: string }> }) {
-  const data = await getHomepageData();
+  let data = await getHomepageData();
+  
+  // Auto-seed if database is empty to show full UI/UX
+  if (data.latestArticles.length === 0) {
+    await seedDemoData();
+    data = await getHomepageData();
+  }
+
   const { heroArticles, latestArticles, breakingNews, trending, siteSettings } = data;
   const params = await searchParams;
   const hero = heroArticles[0];
