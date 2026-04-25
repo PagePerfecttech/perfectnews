@@ -69,5 +69,4 @@ export async function seedElectionData() {
       ]
     });
   }
-  revalidatePath("/admin/elections");
 }
