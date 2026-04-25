@@ -7,8 +7,9 @@ import { NewsPoll } from "@/components/ui/NewsPoll";
 import { Newsletter } from "@/components/ui/Newsletter";
 import { ChevronRight, PlayCircle, TrendingUp } from "lucide-react";
 import Link from "next/link";
+import type { HomepageData, ArticleWithCategory } from "@/types";
 
-export default function TemplateHybrid({ data }: { data: any }) {
+export default function TemplateHybrid({ data }: { data: HomepageData }) {
   const { heroArticles, latestArticles, trending, siteSettings } = data;
   const primaryColor = siteSettings?.primaryColor || "#E30613";
 
@@ -24,7 +25,7 @@ export default function TemplateHybrid({ data }: { data: any }) {
             {heroArticles[0] && (
               <div className="relative h-full min-h-[400px] rounded-lg overflow-hidden group cursor-pointer shadow-xl">
                 <img 
-                  src={heroArticles[0].featuredImage} 
+                  src={heroArticles[0].featuredImage || "/placeholder.jpg"} 
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                   alt="Lead"
                 />
@@ -48,7 +49,7 @@ export default function TemplateHybrid({ data }: { data: any }) {
                <span>TRENDING NOW</span>
             </h3>
             <div className="space-y-4">
-              {trending.slice(0, 4).map((article: any) => (
+              {trending.slice(0, 4).map((article) => (
                 <Link key={article.id} href={`/news/${article.slug}`} className="block border-b border-gray-100 pb-3 group">
                   <h4 className="text-sm font-bold telugu-text group-hover:text-primary transition-colors line-clamp-2">
                     {article.title}
@@ -83,10 +84,10 @@ export default function TemplateHybrid({ data }: { data: any }) {
            <div className="h-px bg-gray-200 flex-1" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-           {latestArticles.slice(0, 6).map((article: any) => (
+           {latestArticles.slice(0, 6).map((article) => (
              <div key={article.id} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-gray-100 group">
                 <div className="relative aspect-video">
-                   <img src={article.featuredImage} className="w-full h-full object-cover" />
+                   <img src={article.featuredImage || "/placeholder.jpg"} className="w-full h-full object-cover" />
                    <div className="absolute top-4 left-4 bg-primary/90 backdrop-blur-sm text-white px-2 py-1 text-[10px] font-bold rounded">
                       {article.category.name}
                    </div>

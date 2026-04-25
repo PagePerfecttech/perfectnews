@@ -5,8 +5,9 @@ import { MarketTicker } from "@/components/layout/MarketTicker";
 import { NewsCard, ShortsCard } from "@/components/ui/NewsCards";
 import { Hash, PlayCircle, TrendingUp, Zap } from "lucide-react";
 import Link from "next/link";
+import type { HomepageData } from "@/types";
 
-export default function TemplateDynamic({ data }: { data: any }) {
+export default function TemplateDynamic({ data }: { data: HomepageData }) {
   const { heroArticles, latestArticles, trending, siteSettings } = data;
   
   // Trending Topics for Hashtag Navigation (Mocked from Category names)
@@ -42,7 +43,7 @@ export default function TemplateDynamic({ data }: { data: any }) {
           
           {/* Main 2-Stack Grid */}
           <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6">
-             {heroArticles.slice(0, 2).map((article: any) => (
+             {heroArticles.slice(0, 2).map((article) => (
                <div key={article.id} className="group cursor-pointer space-y-4">
                   <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-md group-hover:shadow-xl transition-all">
                      <img src={article.featuredImage || "/placeholder.jpg"} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
@@ -69,7 +70,7 @@ export default function TemplateDynamic({ data }: { data: any }) {
                 </h3>
              </div>
              <div className="space-y-6">
-                {trending.map((article: any) => (
+                {trending.map((article) => (
                   <Link key={article.id} href={`/news/${article.slug}`} className="flex items-start space-x-4 group">
                     <div className="w-2 h-2 bg-primary rounded-full mt-1.5 flex-shrink-0 group-hover:scale-150 transition-transform" />
                     <h4 className="text-sm font-bold telugu-text leading-snug group-hover:text-primary transition-colors">
@@ -97,7 +98,7 @@ export default function TemplateDynamic({ data }: { data: any }) {
              <h2 className="text-2xl font-black text-white italic">REELS</h2>
           </div>
           <div className="flex space-x-4 overflow-x-auto pb-6 no-scrollbar scrollbar-hide">
-            {latestArticles.slice(4, 9).map((article: any) => (
+            {latestArticles.slice(4, 9).map((article) => (
               <ShortsCard 
                 key={article.id}
                 title={article.title}
@@ -112,7 +113,7 @@ export default function TemplateDynamic({ data }: { data: any }) {
       {/* Standard Grid */}
       <section className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-           {latestArticles.slice(0, 8).map((article: any) => (
+           {latestArticles.slice(0, 8).map((article) => (
              <NewsCard 
                key={article.id}
                title={article.title}

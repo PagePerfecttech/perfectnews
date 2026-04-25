@@ -1,4 +1,3 @@
-import { siteConfig } from "@/config/site";
 
 export function generatePrivacyPolicy(siteName: string, email: string) {
   return `

@@ -99,6 +99,7 @@ model Article {
   categoryId      String
   category        Category      @relation(fields: [categoryId], references: [id])
   tags            Tag[]
+  liveUpdates     LiveUpdate[]
   
   // SEO
   metaTitle       String?
@@ -136,6 +137,18 @@ model Advertisement {
   createdAt   DateTime @default(now())
 
   @@index([isActive, zone])
+}
+
+model LiveUpdate {
+  id          String   @id @default(cuid())
+  articleId   String
+  article     Article  @relation(fields: [articleId], references: [id])
+  content     String   @db.Text
+  isImportant Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([articleId])
 }
 
 model EPaper {

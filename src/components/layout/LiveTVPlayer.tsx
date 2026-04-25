@@ -3,14 +3,13 @@
 import React, { useState } from 'react';
 import { Tv, X, Maximize2, Minimize2, Play } from 'lucide-react';
 
-export function LiveTVPlayer() {
+export function LiveTVPlayer({ liveTvUrl }: { liveTvUrl?: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
 
-  const liveUrl = process.env.NEXT_PUBLIC_LIVE_TV_URL;
-  const isPlaceholder = liveUrl === "https://www.youtube.com/embed/live_id";
+  const isPlaceholder = liveTvUrl === "https://www.youtube.com/embed/live_id";
 
-  if (!liveUrl || isPlaceholder) return null;
+  if (!liveTvUrl || isPlaceholder) return null;
 
   if (!isOpen) {
     return (
@@ -54,7 +53,7 @@ export function LiveTVPlayer() {
          <iframe 
             width="100%" 
             height="100%" 
-            src="https://www.youtube.com/embed/live_stream?channel=UC80Z9_q-Xf66n29rG0Lq-Gg&autoplay=1&mute=1" 
+            src={liveTvUrl} 
             title="Live TV" 
             frameBorder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 

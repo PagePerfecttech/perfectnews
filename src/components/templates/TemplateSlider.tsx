@@ -5,8 +5,9 @@ import { MarketTicker } from "@/components/layout/MarketTicker";
 import { HeroCard, NewsCard } from "@/components/ui/NewsCards";
 import { TrendingUp, Clock, Flame, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
+import type { HomepageData } from "@/types";
 
-export default function TemplateSlider({ data }: { data: any }) {
+export default function TemplateSlider({ data }: { data: HomepageData }) {
   const { heroArticles, latestArticles, trending, siteSettings } = data;
   const [activeHero, setActiveHero] = useState(0);
   const [sidebarTab, setSidebarTab] = useState('latest');
@@ -55,7 +56,7 @@ export default function TemplateSlider({ data }: { data: any }) {
 
                   <div className="absolute bottom-0 p-8 space-y-4">
                      <div className="flex space-x-2">
-                        {heroArticles.map((_: any, i: number) => (
+                        {heroArticles.map((_: unknown, i: number) => (
                            <div key={i} className={`h-1 rounded-full transition-all ${i === activeHero ? 'w-8 bg-primary' : 'w-4 bg-white/50'}`} />
                         ))}
                      </div>
@@ -89,7 +90,7 @@ export default function TemplateSlider({ data }: { data: any }) {
                 </button>
              </div>
              <div className="bg-white rounded-b-lg shadow-sm flex-1 p-4 overflow-y-auto max-h-[500px] scrollbar-hide no-scrollbar">
-                {(sidebarTab === 'latest' ? latestArticles : trending).map((article: any, i: number) => (
+                {(sidebarTab === 'latest' ? latestArticles : trending).map((article, i: number) => (
                   <Link key={article.id} href={`/news/${article.slug}`} className="flex items-start space-x-3 py-3 border-b border-gray-50 last:border-0 group">
                     <span className="text-xl font-black text-gray-200 mt-1">0{i+1}</span>
                     <h4 className="text-sm font-bold telugu-text leading-snug group-hover:text-primary transition-colors">
@@ -109,7 +110,7 @@ export default function TemplateSlider({ data }: { data: any }) {
            <Link href="/news" className="text-primary font-black text-[10px] tracking-widest hover:underline uppercase">Browse Categories</Link>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-           {latestArticles.slice(0, 8).map((article: any) => (
+           {latestArticles.slice(0, 8).map((article) => (
              <NewsCard 
                key={article.id}
                title={article.title}

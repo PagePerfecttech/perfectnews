@@ -15,7 +15,7 @@ if (!redisClient.isOpen) {
 /**
  * Caches data with a TTL (Time-To-Live)
  */
-export async function setCache(key: string, value: any, ttlSeconds: number = 60) {
+export async function setCache(key: string, value: unknown, ttlSeconds: number = 60) {
   try {
     await redisClient.set(key, JSON.stringify(value), {
       EX: ttlSeconds,

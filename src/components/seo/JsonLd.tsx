@@ -2,11 +2,11 @@ import React from 'react';
 
 interface JsonLdProps {
   type: 'NewsArticle' | 'VideoObject' | 'Organization' | 'WebSite';
-  data: any;
+  data: Record<string, unknown>;
 }
 
 export function JsonLd({ type, data }: JsonLdProps) {
-  let schema: any = {
+  let schema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": type,
     ...data

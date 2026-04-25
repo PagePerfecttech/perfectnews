@@ -17,6 +17,11 @@ export default function SiteSettingsPage() {
     facebookUrl: "https://facebook.com/perfectnews",
     twitterUrl: "https://twitter.com/perfectnews",
     whatsappNumber: "919988776655",
+    liveTvUrl: "",
+    market_weather: "34°C",
+    market_gold: "₹72,450",
+    market_sensex: "74,248.12",
+    market_usdInr: "₹83.45",
   });
 
   useEffect(() => {
@@ -25,11 +30,16 @@ export default function SiteSettingsPage() {
       if (settings) {
         setFormData(prev => ({
           ...prev,
-          siteName: settings.portalName || prev.siteName,
+          siteName: settings.name || prev.siteName,
           siteDescription: settings.tagline || prev.siteDescription,
-          primaryColor: (settings as any).primaryColor || prev.primaryColor,
-          template: (settings as any).template || prev.template,
+          primaryColor: settings.primaryColor || prev.primaryColor,
+          template: settings.template || prev.template,
           contactEmail: settings.contactEmail || prev.contactEmail,
+          liveTvUrl: settings.liveTvUrl || prev.liveTvUrl,
+          market_weather: settings.market_weather || prev.market_weather,
+          market_gold: settings.market_gold || prev.market_gold,
+          market_sensex: settings.market_sensex || prev.market_sensex,
+          market_usdInr: settings.market_usdInr || prev.market_usdInr,
         }));
       }
     }
@@ -55,8 +65,8 @@ export default function SiteSettingsPage() {
       {/* Header */}
       <div className="flex items-center justify-between">
          <div className="space-y-1">
-            <h1 className="text-3xl font-black italic tracking-tighter uppercase">Site <span className="text-primary">Settings</span></h1>
-            <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest flex items-center">
+            <h1 className="text-3xl font-black italic tracking-tighter uppercase text-gray-900">Site <span className="text-gray-400">Settings</span></h1>
+            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest flex items-center">
                <Shield className="w-3 h-3 mr-1 text-green-500" />
                Administrator Only Access
             </p>
@@ -64,7 +74,7 @@ export default function SiteSettingsPage() {
          <button 
            onClick={handleSave}
            disabled={isSaving}
-           className="bg-primary text-white px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest shadow-xl shadow-red-100 hover:scale-105 transition-all flex items-center space-x-2"
+           className="bg-black text-white px-8 py-3 rounded-2xl font-bold text-xs uppercase tracking-widest shadow-sm hover:bg-gray-800 transition-all flex items-center space-x-2 disabled:opacity-50"
          >
             {isSaving ? <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : (success ? <Check className="w-4 h-4" /> : <Save className="w-4 h-4" />)}
             <span>{isSaving ? "Saving..." : (success ? "Saved!" : "Save Configuration")}</span>
@@ -75,8 +85,8 @@ export default function SiteSettingsPage() {
         
         {/* General Branding */}
         <section className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 space-y-6">
-           <h3 className="text-sm font-black uppercase tracking-widest text-secondary flex items-center space-x-2">
-              <Globe className="w-4 h-4 text-primary" />
+           <h3 className="text-sm font-black uppercase tracking-widest text-gray-900 flex items-center space-x-2">
+              <Globe className="w-4 h-4 text-gray-400" />
               <span>General Branding</span>
            </h3>
            <div className="space-y-4">
@@ -109,8 +119,8 @@ export default function SiteSettingsPage() {
         {/* Visual Identity & Template */}
         <section className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 space-y-8 md:col-span-2">
            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-black uppercase tracking-widest text-secondary flex items-center space-x-2">
-                 <Palette className="w-4 h-4 text-primary" />
+              <h3 className="text-sm font-black uppercase tracking-widest text-gray-900 flex items-center space-x-2">
+                 <Palette className="w-4 h-4 text-gray-400" />
                  <span>Frontend Design & Template</span>
               </h3>
               <div className="flex items-center space-x-3 bg-gray-50 px-4 py-2 rounded-xl">
@@ -141,10 +151,10 @@ export default function SiteSettingsPage() {
                     checked={formData.template === tpl.id}
                     onChange={() => setFormData({...formData, template: tpl.id})}
                   />
-                  <div className="border-2 border-gray-100 rounded-3xl overflow-hidden p-1 peer-checked:border-primary transition-all shadow-sm peer-checked:shadow-xl peer-checked:shadow-primary/10">
+                  <div className="border-2 border-gray-100 rounded-3xl overflow-hidden p-1 peer-checked:border-black transition-all shadow-sm peer-checked:shadow-md">
                      <div className="relative aspect-video rounded-2xl overflow-hidden mb-3">
                         <img src={tpl.image} className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all" alt={tpl.name} />
-                        <div className="absolute inset-0 bg-primary/0 peer-checked:bg-primary/5 transition-all" />
+                        <div className="absolute inset-0 bg-black/0 peer-checked:bg-black/5 transition-all" />
                      </div>
                      <div className="px-3 pb-3 space-y-1 text-center">
                         <p className="text-[10px] font-black uppercase tracking-tight">{tpl.name}</p>
@@ -152,7 +162,7 @@ export default function SiteSettingsPage() {
                      </div>
                   </div>
                    <div className="absolute top-3 right-3 flex flex-col items-end space-y-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className="bg-primary text-white p-1 rounded-full shadow-lg peer-checked:block hidden">
+                      <div className="bg-black text-white p-1 rounded-full shadow-sm peer-checked:block hidden">
                          <Check className="w-3 h-3" />
                       </div>
                       <button 
@@ -162,7 +172,7 @@ export default function SiteSettingsPage() {
                           e.stopPropagation();
                           window.open(`/?template=${tpl.id}`, '_blank');
                         }}
-                        className="bg-white/90 backdrop-blur-sm text-secondary p-2 rounded-xl shadow-lg hover:bg-primary hover:text-white transition-all"
+                        className="bg-white/90 backdrop-blur-sm text-gray-900 p-2 rounded-xl shadow-sm border border-gray-200 hover:bg-black hover:text-white hover:border-black transition-all"
                       >
                          <Eye className="w-4 h-4" />
                       </button>
@@ -174,8 +184,8 @@ export default function SiteSettingsPage() {
 
         {/* Social & Contact */}
         <section className="bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 space-y-6 md:col-span-2">
-           <h3 className="text-sm font-black uppercase tracking-widest text-secondary flex items-center space-x-2">
-              <Share2 className="w-4 h-4 text-primary" />
+           <h3 className="text-sm font-black uppercase tracking-widest text-gray-900 flex items-center space-x-2">
+              <Share2 className="w-4 h-4 text-gray-400" />
               <span>Social & Community Connections</span>
            </h3>
            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -203,6 +213,68 @@ export default function SiteSettingsPage() {
                    type="text" 
                    value={formData.whatsappNumber}
                    onChange={(e) => setFormData({...formData, whatsappNumber: e.target.value})}
+                   className="w-full bg-gray-50 p-4 rounded-xl text-sm font-bold border-none outline-none focus:ring-2 focus:ring-primary/20" 
+                 />
+              </div>
+              <div className="space-y-2">
+                 <label className="text-[10px] font-black text-gray-400 uppercase">Live TV URL (YouTube Embed)</label>
+                 <input 
+                   type="text" 
+                   value={formData.liveTvUrl}
+                   onChange={(e) => setFormData({...formData, liveTvUrl: e.target.value})}
+                   className="w-full bg-gray-50 p-4 rounded-xl text-sm font-bold border-none outline-none focus:ring-2 focus:ring-primary/20" 
+                   placeholder="https://www.youtube.com/embed/..."
+                 />
+              </div>
+           </div>
+        </section>
+
+        {/* Market Ticker Section */}
+        <section className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm space-y-6">
+           <div className="flex items-center space-x-4 border-b pb-4">
+             <div className="p-3 bg-green-50 text-green-600 rounded-xl">
+               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+             </div>
+             <div>
+               <h3 className="font-bold text-gray-800">Market Ticker Values</h3>
+               <p className="text-xs text-gray-500">Update the live ticker shown at the top of the portal.</p>
+             </div>
+           </div>
+           
+           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="space-y-2">
+                 <label className="text-[10px] font-black text-gray-400 uppercase">Weather (°C)</label>
+                 <input 
+                   type="text" 
+                   value={formData.market_weather}
+                   onChange={(e) => setFormData({...formData, market_weather: e.target.value})}
+                   className="w-full bg-gray-50 p-4 rounded-xl text-sm font-bold border-none outline-none focus:ring-2 focus:ring-primary/20" 
+                 />
+              </div>
+              <div className="space-y-2">
+                 <label className="text-[10px] font-black text-gray-400 uppercase">24K Gold</label>
+                 <input 
+                   type="text" 
+                   value={formData.market_gold}
+                   onChange={(e) => setFormData({...formData, market_gold: e.target.value})}
+                   className="w-full bg-gray-50 p-4 rounded-xl text-sm font-bold border-none outline-none focus:ring-2 focus:ring-primary/20" 
+                 />
+              </div>
+              <div className="space-y-2">
+                 <label className="text-[10px] font-black text-gray-400 uppercase">Sensex</label>
+                 <input 
+                   type="text" 
+                   value={formData.market_sensex}
+                   onChange={(e) => setFormData({...formData, market_sensex: e.target.value})}
+                   className="w-full bg-gray-50 p-4 rounded-xl text-sm font-bold border-none outline-none focus:ring-2 focus:ring-primary/20" 
+                 />
+              </div>
+              <div className="space-y-2">
+                 <label className="text-[10px] font-black text-gray-400 uppercase">USD / INR</label>
+                 <input 
+                   type="text" 
+                   value={formData.market_usdInr}
+                   onChange={(e) => setFormData({...formData, market_usdInr: e.target.value})}
                    className="w-full bg-gray-50 p-4 rounded-xl text-sm font-bold border-none outline-none focus:ring-2 focus:ring-primary/20" 
                  />
               </div>

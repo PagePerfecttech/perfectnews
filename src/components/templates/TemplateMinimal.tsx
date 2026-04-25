@@ -5,8 +5,9 @@ import { MarketTicker } from "@/components/layout/MarketTicker";
 import { NewsCard } from "@/components/ui/NewsCards";
 import { DollarSign, Star, TrendingUp, Info } from "lucide-react";
 import Link from "next/link";
+import type { HomepageData } from "@/types";
 
-export default function TemplateMinimal({ data }: { data: any }) {
+export default function TemplateMinimal({ data }: { data: HomepageData }) {
   const { heroArticles, latestArticles, trending, siteSettings } = data;
   
   // Mock Box Office Data for Premium Widget
@@ -76,7 +77,7 @@ export default function TemplateMinimal({ data }: { data: any }) {
                    <span>REVIEWS & RATINGS</span>
                 </h3>
                 <div className="space-y-8">
-                   {latestArticles.slice(1, 4).map((article: any) => (
+                   {latestArticles.slice(1, 4).map((article) => (
                      <Link key={article.id} href={`/news/${article.slug}`} className="flex space-x-6 group">
                         <div className="w-32 h-20 rounded-xl overflow-hidden flex-shrink-0 shadow-md">
                            <img src={article.featuredImage || "/placeholder.jpg"} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
@@ -101,7 +102,7 @@ export default function TemplateMinimal({ data }: { data: any }) {
                    <span>MOST READ TODAY</span>
                 </h3>
                 <div className="space-y-6">
-                   {trending.slice(0, 5).map((article: any, i: number) => (
+                   {trending.slice(0, 5).map((article, i: number) => (
                      <Link key={article.id} href={`/news/${article.slug}`} className="flex items-start space-x-4 group">
                         <span className="text-2xl font-black text-gray-200 group-hover:text-primary transition-colors">0{i+1}</span>
                         <p className="text-sm font-bold telugu-text leading-snug group-hover:text-primary transition-colors">
@@ -118,7 +119,7 @@ export default function TemplateMinimal({ data }: { data: any }) {
       {/* Grid Section */}
       <section className="container mx-auto px-4 py-16 border-t border-gray-50">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-           {latestArticles.slice(4, 12).map((article: any) => (
+           {latestArticles.slice(4, 12).map((article) => (
              <NewsCard 
                key={article.id}
                title={article.title}

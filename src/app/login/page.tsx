@@ -46,7 +46,7 @@ export default function LoginPage() {
           </Link>
         </div>
 
-        <div className="w-full bg-white rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.04)] border border-gray-100 p-10 sm:p-12 space-y-10 relative overflow-hidden">
+        <div className="w-full bg-white rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.04)] border border-gray-100 p-8 sm:p-12 space-y-10 relative overflow-hidden">
           
           {/* Accent Header */}
           <div className="text-center space-y-4">

@@ -3,27 +3,41 @@
 import { prisma } from "./db";
 import { revalidatePath } from "next/cache";
 
+import { DEFAULT_SITE_INFO } from "@/config/site";
+import type { SiteInfo } from "@/types";
+
 /**
- * PRODUCTION READY: Fetches portal branding and installation status
+ * Fetches portal branding and categories, merging with defaults
  */
-export async function getSiteSettings(): Promise<{
-  id?: string;
-  portalName: string;
-  tagline: string;
-  isSetupComplete: boolean;
-  primaryColor: string;
-  template: string;
-  theme: string;
-  contactEmail?: string | null;
-}> {
-  const settings = await prisma.siteSettings.findFirst();
-  return (settings as any) || {
-    portalName: "Perfect News",
-    tagline: "మీ స్వరం, మీ అండ",
-    isSetupComplete: false,
-    primaryColor: "#E30613",
-    template: "HYBRID",
-    theme: "LIGHT"
+export async function getSiteSettings(): Promise<SiteInfo> {
+  const [settings, dbCategories, allSettings] = await Promise.all([
+    prisma.siteSettings.findFirst(),
+    prisma.category.findMany({ orderBy: { name: 'asc' } }),
+    prisma.setting.findMany()
+  ]);
+
+  const getSetting = (k: string) => allSettings.find(s => s.key === k)?.value;
+
+  const categories = dbCategories.length > 0 
+    ? dbCategories.map(c => ({ id: c.id, slug: c.slug, label: c.name }))
+    : DEFAULT_SITE_INFO.categories;
+
+  return {
+    ...DEFAULT_SITE_INFO,
+    name: settings?.portalName || DEFAULT_SITE_INFO.name,
+    tagline: settings?.tagline || DEFAULT_SITE_INFO.tagline,
+    primaryColor: settings?.primaryColor || DEFAULT_SITE_INFO.primaryColor,
+    template: settings?.template || DEFAULT_SITE_INFO.template,
+    theme: settings?.theme || DEFAULT_SITE_INFO.theme,
+    contactEmail: settings?.contactEmail || DEFAULT_SITE_INFO.contactEmail,
+    categories,
+    liveTvUrl: getSetting('liveTvUrl'),
+    marketTicker: {
+      weather: getSetting('market_weather') || "34°C",
+      gold: getSetting('market_gold') || "₹72,450",
+      sensex: getSetting('market_sensex') || "74,248.12",
+      usdInr: getSetting('market_usdInr') || "₹83.45",
+    }
   };
 }
 

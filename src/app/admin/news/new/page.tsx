@@ -16,13 +16,50 @@ import {
   HelpCircle
 } from 'lucide-react';
 import Link from 'next/link';
-import { siteConfig } from '@/config/site';
+import { DEFAULT_SITE_INFO } from '@/config/site';
+import { saveArticle } from '@/lib/news-actions';
+import { useTransition } from 'react';
 
 export default function NewArticle() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isPending, startTransition] = useTransition();
+  const [imageUrl, setImageUrl] = useState<string>('');
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.url) {
+        setImageUrl(data.url);
+      }
+    } catch (err) {
+      console.error("Upload failed", err);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    startTransition(() => {
+      saveArticle(formData);
+    });
+  };
 
   return (
-    <div className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <form onSubmit={handleSubmit} className="max-w-6xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Main Editor Area */}
         <div className="flex-1 space-y-6">
@@ -32,13 +69,32 @@ export default function NewArticle() {
               Discard Draft
             </Link>
             <div className="flex items-center space-x-3">
-              <button className="px-4 py-2 text-sm font-bold text-gray-600 hover:bg-gray-100 rounded-lg flex items-center space-x-2">
+              <button 
+                type="button"
+                onClick={() => {
+                  const form = document.querySelector('form');
+                  if(form) {
+                     const statusInput = document.createElement('input');
+                     statusInput.type = 'hidden';
+                     statusInput.name = 'status';
+                     statusInput.value = 'DRAFT';
+                     form.appendChild(statusInput);
+                     form.requestSubmit();
+                  }
+                }}
+                disabled={isPending}
+                className="px-4 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 rounded-xl flex items-center space-x-2 shadow-sm transition-colors disabled:opacity-50"
+              >
                 <Save className="w-4 h-4" />
-                <span>Save Draft</span>
+                <span>{isPending ? "Saving..." : "Save Draft"}</span>
               </button>
-              <button className="px-6 py-2 text-sm font-bold bg-primary text-white hover:bg-red-700 rounded-lg flex items-center space-x-2 shadow-lg shadow-red-100">
+              <button 
+                type="submit"
+                disabled={isPending}
+                className="px-6 py-2.5 text-sm font-semibold bg-black text-white hover:bg-gray-800 rounded-xl flex items-center space-x-2 shadow-sm transition-colors disabled:opacity-50"
+              >
                 <Send className="w-4 h-4" />
-                <span>Publish Now</span>
+                <span>{isPending ? "Publishing..." : "Publish Now"}</span>
               </button>
             </div>
           </div>
@@ -48,6 +104,8 @@ export default function NewArticle() {
             <div className="space-y-2">
               <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Article Title (Telugu)</label>
               <textarea 
+                name="title"
+                required
                 placeholder="ఇక్కడ శీర్షికను టైప్ చేయండి..." 
                 className="w-full text-3xl font-bold telugu-text border-none outline-none focus:ring-0 placeholder:text-gray-200 resize-none min-h-[100px]"
               />
@@ -63,7 +121,7 @@ export default function NewArticle() {
                <button className="p-2 hover:bg-white hover:shadow-sm rounded-lg transition-all"><LinkIcon className="w-4 h-4 text-gray-600" /></button>
                <button className="p-2 hover:bg-white hover:shadow-sm rounded-lg transition-all"><ImageIcon className="w-4 h-4 text-gray-600" /></button>
                <div className="flex-1" />
-               <button className="p-2 text-primary hover:bg-red-50 rounded-lg flex items-center space-x-1">
+               <button className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg flex items-center space-x-1 transition-colors">
                   <HelpCircle className="w-4 h-4" />
                   <span className="text-[10px] font-bold">Telugu Typing Help</span>
                </button>
@@ -72,6 +130,8 @@ export default function NewArticle() {
             {/* Content Area */}
             <div className="min-h-[400px]">
               <textarea 
+                name="content"
+                required
                 placeholder="వార్త వివరాలను ఇక్కడ వ్రాయండి..." 
                 className="w-full h-full min-h-[400px] text-lg telugu-text border-none outline-none focus:ring-0 placeholder:text-gray-200 resize-none leading-relaxed"
               />
@@ -82,26 +142,26 @@ export default function NewArticle() {
         {/* Settings Sidebar */}
         <div className="w-full lg:w-80 space-y-6">
            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-6 sticky top-24">
-              <h3 className="font-bold text-gray-800 flex items-center space-x-2">
-                 <Settings2 className="w-5 h-5 text-primary" />
+              <h3 className="font-bold text-gray-900 flex items-center space-x-2 tracking-tight">
+                 <Settings2 className="w-5 h-5 text-black" />
                  <span>Article Settings</span>
               </h3>
 
               {/* Status */}
               <div className="space-y-2">
-                 <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Visibility</label>
-                 <select className="w-full p-2 bg-gray-50 border-transparent rounded-lg text-sm font-bold outline-none cursor-pointer">
-                    <option>Public</option>
-                    <option>Private</option>
-                    <option>Draft</option>
+                 <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Status (Fallback)</label>
+                 <select name="status" className="w-full p-2 bg-gray-50 border-transparent rounded-lg text-sm font-bold outline-none cursor-pointer">
+                    <option value="PUBLISHED">Public / Published</option>
+                    <option value="PENDING">Private / Pending</option>
+                    <option value="DRAFT">Draft</option>
                  </select>
               </div>
 
               {/* Category */}
               <div className="space-y-2">
                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Category</label>
-                 <select className="w-full p-2 bg-gray-50 border-transparent rounded-lg text-sm telugu-text font-bold outline-none cursor-pointer">
-                    {siteConfig.categories.map(cat => (
+                 <select name="categoryId" className="w-full p-2 bg-gray-50 border-transparent rounded-lg text-sm telugu-text font-bold outline-none cursor-pointer">
+                    {DEFAULT_SITE_INFO.categories.map(cat => (
                       <option key={cat.id} value={cat.id}>{cat.label}</option>
                     ))}
                  </select>
@@ -110,31 +170,42 @@ export default function NewArticle() {
               {/* Featured Image */}
               <div className="space-y-2">
                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Featured Image</label>
-                 <div className="aspect-video bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors group">
-                    <ImageIcon className="w-8 h-8 text-gray-300 group-hover:text-primary transition-colors" />
-                    <span className="text-[10px] font-bold text-gray-400 mt-2 uppercase">Click to Upload</span>
-                 </div>
+                 <label className="relative aspect-video bg-gray-50 rounded-xl border-2 border-dashed border-gray-200 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 hover:border-gray-300 transition-all overflow-hidden group">
+                    <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} disabled={isUploading} />
+                    <input type="hidden" name="featuredImage" value={imageUrl} />
+                    
+                    {imageUrl ? (
+                      <img src={imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                    ) : (
+                      <>
+                        <ImageIcon className={`w-8 h-8 transition-colors ${isUploading ? 'text-primary animate-pulse' : 'text-gray-300 group-hover:text-gray-500'}`} />
+                        <span className="text-[10px] font-bold text-gray-400 mt-2 uppercase">
+                          {isUploading ? 'Uploading...' : 'Click to Upload'}
+                        </span>
+                      </>
+                    )}
+                 </label>
               </div>
 
               {/* Toggles */}
-              <div className="space-y-4 pt-4 border-t border-gray-50">
+              <div className="space-y-4 pt-4 border-t border-gray-100">
                  <label className="flex items-center justify-between cursor-pointer group">
-                    <span className="text-xs font-bold text-gray-600 group-hover:text-primary transition-colors">Mark as Breaking News</span>
-                    <input type="checkbox" className="w-4 h-4 accent-primary" />
+                    <span className="text-xs font-semibold text-gray-700 group-hover:text-black transition-colors">Mark as Breaking News</span>
+                    <input type="checkbox" name="isBreaking" className="w-4 h-4 accent-black" />
                  </label>
                  <label className="flex items-center justify-between cursor-pointer group">
-                    <span className="text-xs font-bold text-gray-600 group-hover:text-primary transition-colors">Show in Hero Slider</span>
-                    <input type="checkbox" className="w-4 h-4 accent-primary" />
+                    <span className="text-xs font-semibold text-gray-700 group-hover:text-black transition-colors">Show in Hero Slider</span>
+                    <input type="checkbox" name="isTrending" className="w-4 h-4 accent-black" />
                  </label>
               </div>
 
-              <button className="w-full py-3 bg-gray-50 hover:bg-primary hover:text-white rounded-xl text-xs font-bold text-gray-500 transition-all flex items-center justify-center space-x-2">
+              <button type="button" className="w-full py-3 bg-white border border-gray-200 hover:bg-gray-50 rounded-xl text-xs font-bold text-gray-700 shadow-sm transition-all flex items-center justify-center space-x-2">
                  <Eye className="w-4 h-4" />
                  <span>Preview Live</span>
               </button>
            </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 }

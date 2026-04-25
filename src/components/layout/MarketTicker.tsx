@@ -3,12 +3,12 @@
 import React from 'react';
 import { CloudSun, TrendingUp, DollarSign, Gem } from 'lucide-react';
 
-export function MarketTicker() {
+export function MarketTicker({ tickerData }: { tickerData?: any }) {
   const data = [
-    { label: "HYD WEATHER", value: "34°C", icon: CloudSun, color: "text-blue-500" },
-    { label: "24K GOLD (10g)", value: "₹72,450", icon: Gem, color: "text-amber-500" },
-    { label: "SENSEX", value: "74,248.12", icon: TrendingUp, color: "text-green-600" },
-    { label: "USD/INR", value: "₹83.45", icon: DollarSign, color: "text-indigo-600" },
+    { label: "HYD WEATHER", value: tickerData?.weather || "34°C", icon: CloudSun, color: "text-blue-500" },
+    { label: "24K GOLD (10g)", value: tickerData?.gold || "₹72,450", icon: Gem, color: "text-amber-500" },
+    { label: "SENSEX", value: tickerData?.sensex || "74,248.12", icon: TrendingUp, color: "text-green-600" },
+    { label: "USD/INR", value: tickerData?.usdInr || "₹83.45", icon: DollarSign, color: "text-indigo-600" },
   ];
 
   return (

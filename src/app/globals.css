@@ -3,43 +3,16 @@
 @theme {
   --font-sans: var(--font-inter);
   --font-telugu: var(--font-noto-telugu);
+  
+  --color-primary: #111111;
+  --color-accent: #E31E24;
 }
 
 :root {
-  /* THEME 1: MODERN (Default) */
-  --primary: 227 100% 50%; /* #E31E24 - Vibrant Red */
-  --secondary: 222 47% 11%; /* #0F172A - Deep Navy */
-  --accent: 217 91% 60%;
-  
-  /* THEME 2: CLASSIC (Eenadu Style) */
-  --classic-primary: 34 100% 50%; /* #FF8C00 - Saffron */
-  --classic-bg: 0 0% 100%;
-  
-  /* THEME 3: DARK MODE (Tech Style) */
-  --dark-bg: 222 47% 11%;
-  --dark-text: 210 40% 98%;
-
-  --radius: 1rem;
-}
-
-[data-theme='classic'] {
-  --primary: 34 100% 50%;
-  --secondary: 0 0% 20%;
-  --radius: 0.25rem; /* Sharp edges for classic look */
-}
-
-[data-theme='brutalist'] {
-  --primary: 0 0% 0%;
-  --secondary: 0 0% 100%;
-  --radius: 0;
-  --border: 4px solid #000;
-}
-
-[data-theme='dark'] {
-  --background: #0F0F0F;
-  --text-main: #F5F5F5;
-  --text-muted: #AAAAAA;
-  --border: #333333;
+  --background: #FFFFFF;
+  --text-main: #111111;
+  --text-muted: #666666;
+  --border: #EAEAEA;
 }
 
 body {
@@ -47,6 +20,8 @@ body {
   background: var(--background);
   font-family: var(--font-sans), system-ui, sans-serif;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .telugu-text {
@@ -56,14 +31,17 @@ body {
 
 /* Custom scrollbar for premium look */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--primary);
+  background: #CCCCCC;
   border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #999999;
 }
 
 /* Animations */
